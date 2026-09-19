@@ -30,18 +30,18 @@ const DEFAULT_STATE = {
     codEnabled:true
   },
   products:[
-    {id:'p1', name:'كيك شوكولاتة بالفراولة', category:'كيك', price:150, oldPrice:0, desc:'كيك طبقات شوكولاتة بالفراولة الطازجة وصوص شوكولاتة سائل', emoji:'🍰', image:''},
-    {id:'p2', name:'ريد فيلفيت', category:'كيك', price:120, oldPrice:0, desc:'كيك ريد فيلفيت بكريمة الجبن الطرية', emoji:'❤️', image:''},
-    {id:'p3', name:'تشيز كيك فراولة', category:'كيك', price:110, oldPrice:130, desc:'تشيز كيك كريمي بصوص الفراولة الطبيعي', emoji:'🍓', image:''},
-    {id:'p4', name:'كب كيك مشكل (4 قطع)', category:'كيك', price:60, oldPrice:0, desc:'تشكيلة كب كيك بالكريمة الملونة', emoji:'🧁', image:''},
-    {id:'p5', name:'كرواسون بالشوكولاتة', category:'معجنات', price:35, oldPrice:0, desc:'كرواسون فرنساوي هش محشو شوكولاتة', emoji:'🥐', image:''},
-    {id:'p6', name:'دانيش بالجبنة', category:'معجنات', price:30, oldPrice:0, desc:'معجنات طازجة محشوة جبنة كريمي', emoji:'🥮', image:''},
-    {id:'p7', name:'فطيرة السبانخ', category:'معجنات', price:25, oldPrice:0, desc:'فطيرة بيتي بالسبانخ الطازجة', emoji:'🥟', image:''},
-    {id:'p8', name:'كنافة بالجبنة', category:'حلويات شرقية', price:75, oldPrice:0, desc:'كنافة طازجة محشوة جبنة مع قطر بلدي', emoji:'🧡', image:''},
-    {id:'p9', name:'بقلاوة مشكل', category:'حلويات شرقية', price:90, oldPrice:0, desc:'تشكيلة بقلاوة بالفستق واللوز', emoji:'🥮', image:''},
-    {id:'p10', name:'بسبوسة بالقشطة', category:'حلويات شرقية', price:50, oldPrice:0, desc:'بسبوسة طرية بالقشطة الطازجة', emoji:'🍯', image:''},
-    {id:'p11', name:'كوكيز شوكولاتة تشيب', category:'كوكيز وبسكويت', price:45, oldPrice:0, desc:'كوكيز مقرمش من الخارج طري من الداخل بقطع شوكولاتة', emoji:'🍪', image:''},
-    {id:'p12', name:'بسكويت زبدة دنماركي', category:'كوكيز وبسكويت', price:40, oldPrice:0, desc:'بسكويت زبدة فاخر بطعم غني', emoji:'🍪', image:''}
+    {id:'p1', name:'كيك شوكولاتة بالفراولة', category:'كيك', price:150, oldPrice:0, desc:'كيك طبقات شوكولاتة بالفراولة الطازجة وصوص شوكولاتة سائل', emoji:'🍰', image:'', featured:true, rating:4.8},
+    {id:'p2', name:'ريد فيلفيت', category:'كيك', price:120, oldPrice:0, desc:'كيك ريد فيلفيت بكريمة الجبن الطرية', emoji:'❤️', image:'', featured:false, rating:4.5},
+    {id:'p3', name:'تشيز كيك فراولة', category:'كيك', price:110, oldPrice:130, desc:'تشيز كيك كريمي بصوص الفراولة الطبيعي', emoji:'🍓', image:'', featured:true, rating:4.9},
+    {id:'p4', name:'كب كيك مشكل (4 قطع)', category:'كيك', price:60, oldPrice:0, desc:'تشكيلة كب كيك بالكريمة الملونة', emoji:'🧁', image:'', featured:false, rating:0},
+    {id:'p5', name:'كرواسون بالشوكولاتة', category:'معجنات', price:35, oldPrice:0, desc:'كرواسون فرنساوي هش محشو شوكولاتة', emoji:'🥐', image:'', featured:false, rating:4.3},
+    {id:'p6', name:'دانيش بالجبنة', category:'معجنات', price:30, oldPrice:0, desc:'معجنات طازجة محشوة جبنة كريمي', emoji:'🥮', image:'', featured:false, rating:0},
+    {id:'p7', name:'فطيرة السبانخ', category:'معجنات', price:25, oldPrice:0, desc:'فطيرة بيتي بالسبانخ الطازجة', emoji:'🥟', image:'', featured:false, rating:0},
+    {id:'p8', name:'كنافة بالجبنة', category:'حلويات شرقية', price:75, oldPrice:0, desc:'كنافة طازجة محشوة جبنة مع قطر بلدي', emoji:'🧡', image:'', featured:true, rating:4.7},
+    {id:'p9', name:'بقلاوة مشكل', category:'حلويات شرقية', price:90, oldPrice:0, desc:'تشكيلة بقلاوة بالفستق واللوز', emoji:'🥮', image:'', featured:false, rating:4.4},
+    {id:'p10', name:'بسبوسة بالقشطة', category:'حلويات شرقية', price:50, oldPrice:0, desc:'بسبوسة طرية بالقشطة الطازجة', emoji:'🍯', image:'', featured:false, rating:0},
+    {id:'p11', name:'كوكيز شوكولاتة تشيب', category:'كوكيز وبسكويت', price:45, oldPrice:0, desc:'كوكيز مقرمش من الخارج طري من الداخل بقطع شوكولاتة', emoji:'🍪', image:'', featured:false, rating:4.2},
+    {id:'p12', name:'بسكويت زبدة دنماركي', category:'كوكيز وبسكويت', price:40, oldPrice:0, desc:'بسكويت زبدة فاخر بطعم غني', emoji:'🍪', image:'', featured:false, rating:0}
   ],
   orders:[],
   adminPassword:'admin123',
@@ -62,6 +62,9 @@ function loadState(){
   }catch(e){ return structuredClone(DEFAULT_STATE); }
 }
 function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function markUnpublished(){ localStorage.setItem('sweethome_unpublished', '1'); }
+function clearUnpublished(){ localStorage.removeItem('sweethome_unpublished'); }
+function hasUnpublishedChanges(){ return localStorage.getItem('sweethome_unpublished') === '1'; }
 
 let state = loadState();
 let cart = JSON.parse(localStorage.getItem('sweethome_cart')||'[]');
@@ -86,6 +89,35 @@ function normalizeEgyptPhone(phone){
   if(p.startsWith('20')) return p;
   if(p.startsWith('0')) return '2'+p;
   return '20'+p;
+}
+
+/* ---------------- wishlist (local, per device) ---------------- */
+function getWishlist(){
+  try{ return JSON.parse(localStorage.getItem('sweethome_wishlist')||'[]'); }catch(e){ return []; }
+}
+function isWished(id){ return getWishlist().includes(id); }
+function toggleWishlist(id){
+  let list = getWishlist();
+  if(list.includes(id)) list = list.filter(x=>x!==id);
+  else list.push(id);
+  localStorage.setItem('sweethome_wishlist', JSON.stringify(list));
+  return list.includes(id);
+}
+
+/* ---------------- my orders + loyalty points (local, per device) ---------------- */
+function getMyOrders(){
+  try{ return JSON.parse(localStorage.getItem('sweethome_myorders')||'[]'); }catch(e){ return []; }
+}
+function saveMyOrder(order){
+  const list = getMyOrders();
+  list.unshift(order);
+  localStorage.setItem('sweethome_myorders', JSON.stringify(list.slice(0,20)));
+}
+function getPoints(){ return parseInt(localStorage.getItem('sweethome_points')||'0', 10); }
+function addPoints(n){
+  const total = getPoints() + n;
+  localStorage.setItem('sweethome_points', String(total));
+  return total;
 }
 
 /* ---------------- theming ---------------- */
@@ -161,6 +193,7 @@ function setCartQty(id, qty){
   else { cart.push({id, qty}); }
   saveCart(); renderCartBadge(); renderProducts();
 }
+let sortMode = 'default';
 function renderProducts(){
   const grid = document.getElementById('productsGrid');
   let list = state.products.filter(p=>{
@@ -168,6 +201,10 @@ function renderProducts(){
     const matchSearch = !searchTerm || p.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCat && matchSearch;
   });
+  if(sortMode==='price-asc') list = [...list].sort((a,b)=>a.price-b.price);
+  else if(sortMode==='price-desc') list = [...list].sort((a,b)=>b.price-a.price);
+  else if(sortMode==='rating') list = [...list].sort((a,b)=>(b.rating||0)-(a.rating||0));
+
   if(list.length===0){
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">لا توجد منتجات في هذا القسم حالياً 🍽️</div>`;
     return;
@@ -175,12 +212,19 @@ function renderProducts(){
   grid.innerHTML = list.map(p=>{
     const qty = getCartQty(p.id);
     const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}">` : p.emoji;
+    const wished = isWished(p.id);
+    const starsHtml = p.rating>0 ? `<div class="card-rating">⭐ ${p.rating.toFixed(1)}</div>` : '';
     return `
     <div class="card" data-id="${p.id}">
-      <div class="card-img" data-open="${p.id}">${imgHtml}</div>
+      <div class="card-img" data-open="${p.id}">
+        ${imgHtml}
+        ${p.featured ? `<span class="badge-featured">🏆 الأكثر مبيعاً</span>` : ''}
+        <button class="wish-btn ${wished?'active':''}" data-wish="${p.id}">${wished?'❤️':'🤍'}</button>
+      </div>
       <div class="card-body">
         <div class="card-name">${p.name}</div>
         <div class="card-desc">${p.desc||''}</div>
+        ${starsHtml}
         <div>
           <span class="card-price">${money(p.price)}</span>
           ${p.oldPrice>0?`<span class="card-old-price">${money(p.oldPrice)}</span>`:''}
@@ -201,19 +245,42 @@ function renderProducts(){
   grid.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{ setCartQty(b.dataset.add, 1); toast('تمت الإضافة للسلة 🛍️'); });
   grid.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>setCartQty(b.dataset.inc, getCartQty(b.dataset.inc)+1));
   grid.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>setCartQty(b.dataset.dec, getCartQty(b.dataset.dec)-1));
-  grid.querySelectorAll('[data-open]').forEach(el=>el.onclick=()=>openProduct(el.dataset.open));
+  grid.querySelectorAll('[data-open]').forEach(el=>el.onclick=(e)=>{ if(e.target.closest('[data-wish]')) return; openProduct(el.dataset.open); });
+  grid.querySelectorAll('[data-wish]').forEach(b=>b.onclick=(e)=>{
+    e.stopPropagation();
+    const nowWished = toggleWishlist(b.dataset.wish);
+    toast(nowWished ? 'أُضيف للمفضلة ❤️' : 'أُزيل من المفضلة');
+    renderProducts();
+  });
 }
 
 function openProduct(id){
   const p = state.products.find(p=>p.id===id);
   if(!p) return;
   const imgHtml = p.image ? `<img src="${p.image}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;">` : `<div style="font-size:70px;text-align:center;padding:20px 0;">${p.emoji}</div>`;
+  const related = state.products.filter(x=>x.category===p.category && x.id!==p.id).slice(0,4);
+  const relatedHtml = related.length ? `
+    <div style="font-weight:800;font-size:13.5px;margin:14px 0 8px;">منتجات مشابهة</div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;">
+      ${related.map(r=>`
+        <div data-related="${r.id}" style="flex:0 0 auto;width:84px;text-align:center;cursor:pointer;">
+          <div style="width:84px;height:70px;border-radius:12px;background:var(--card);border:1px solid rgba(200,155,60,.4);display:flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden;">
+            ${r.image?`<img src="${r.image}" style="width:100%;height:100%;object-fit:cover;">`:r.emoji}
+          </div>
+          <div style="font-size:10.5px;font-weight:700;margin-top:4px;line-height:1.3;">${r.name}</div>
+        </div>`).join('')}
+    </div>` : '';
   document.getElementById('productSheet').innerHTML = `
     <div class="sheet-head"><h2>${p.name}</h2><button class="close-x" id="closeProduct">✕</button></div>
     ${imgHtml}
+    ${p.rating>0 ? `<div class="card-rating" style="margin-top:8px;">⭐ ${p.rating.toFixed(1)} من 5</div>` : ''}
     <p style="font-size:13.5px;color:#6a5a4c;line-height:1.7;margin:12px 0;">${p.desc||''}</p>
     <div style="font-size:20px;font-weight:800;color:var(--primary);margin-bottom:10px;">${money(p.price)} ${p.oldPrice>0?`<span class="card-old-price">${money(p.oldPrice)}</span>`:''}</div>
-    <button class="primary-btn" id="addFromDetail">أضف للسلة</button>
+    <div style="display:flex;gap:8px;">
+      <button class="primary-btn" id="addFromDetail" style="flex:2;">أضف للسلة</button>
+      <button class="secondary-btn" id="shareProduct" style="flex:1;margin-top:8px;">🔗 شارك</button>
+    </div>
+    ${relatedHtml}
   `;
   document.getElementById('productOverlay').classList.add('show');
   document.getElementById('closeProduct').onclick = ()=>document.getElementById('productOverlay').classList.remove('show');
@@ -222,6 +289,17 @@ function openProduct(id){
     toast('تمت الإضافة للسلة 🛍️');
     document.getElementById('productOverlay').classList.remove('show');
   };
+  document.getElementById('shareProduct').onclick = ()=>{
+    const shareText = `${p.name} — ${money(p.price)}\nمن ${state.settings.storeName} 🍰\n${location.href}`;
+    if(navigator.share){
+      navigator.share({title:p.name, text:shareText}).catch(()=>{});
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+    }
+  };
+  document.querySelectorAll('[data-related]').forEach(el=>{
+    el.onclick = ()=>openProduct(el.dataset.related);
+  });
 }
 document.getElementById('productOverlay').addEventListener('click', e=>{
   if(e.target.id==='productOverlay') e.target.classList.remove('show');
@@ -386,13 +464,14 @@ function renderCartSheet(){
 
       const payLabel = payType==='vodafone' ? 'فودافون كاش' : payType==='instapay' ? 'انستاباي' : 'الدفع عند الاستلام';
       const deliveryLabel = deliveryType==='delivery' ? 'توصيل للمنزل' : 'استلام من الفرع';
+      const finalTotal = cartTotal();
 
       let msg = `مرحباً *${state.settings.storeName}* 🍰\nأريد تقديم طلب جديد:\n\n`;
       cart.forEach(c=>{
         const p = state.products.find(p=>p.id===c.id);
         if(p) msg += `• ${p.name} × ${c.qty} = ${money(p.price*c.qty)}\n`;
       });
-      msg += `\n*الإجمالي: ${money(cartTotal())}*\n\n`;
+      msg += `\n*الإجمالي: ${money(finalTotal)}*\n\n`;
       msg += `👤 الاسم: ${name}\n📱 الموبايل: ${phone}\n`;
       msg += `🏠 طريقة الاستلام: ${deliveryLabel}\n`;
       if(deliveryType==='delivery') msg += `📍 العنوان: ${address}\n`;
@@ -400,9 +479,11 @@ function renderCartSheet(){
       msg += `💳 الدفع: ${payLabel}\n`;
       if(notes) msg += `📝 ملاحظات: ${notes}\n`;
 
-      const order = { id: uid('ord_'), date: new Date().toISOString(), name, phone, deliveryType, address, branch: branch?branch.name:'', pay: payLabel, notes, items: cart.map(c=>({...c, name: state.products.find(p=>p.id===c.id)?.name})), total: cartTotal() };
+      const order = { id: uid('ord_'), date: new Date().toISOString(), name, phone, deliveryType, address, branch: branch?branch.name:'', pay: payLabel, notes, items: cart.map(c=>({...c, name: state.products.find(p=>p.id===c.id)?.name})), total: finalTotal };
       state.orders.unshift(order);
       saveState();
+      saveMyOrder({ id: order.id, date: order.date, items: order.items, total: finalTotal, status: 'تم الإرسال - قيد المراجعة' });
+      const newPoints = addPoints(Math.floor(finalTotal/10));
 
       const waNumber = normalizeEgyptPhone(branch ? branch.phone : state.payment.vodafoneCash);
       const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
@@ -410,14 +491,18 @@ function renderCartSheet(){
 
       cart = []; saveCart(); renderCartBadge(); renderProducts();
       closeCart();
-      toast('تم إرسال طلبك عبر واتساب ✅');
+      toast(`تم إرسال طلبك عبر واتساب ✅ (+${Math.floor(finalTotal/10)} نقطة، رصيدك الآن ${newPoints})`);
     };
   }
 }
 
-/* ---------------- search ---------------- */
+/* ---------------- search + sort ---------------- */
 document.getElementById('searchInput').addEventListener('input', e=>{
   searchTerm = e.target.value;
+  renderProducts();
+});
+document.getElementById('sortSelect').addEventListener('change', e=>{
+  sortMode = e.target.value;
   renderProducts();
 });
 
@@ -465,6 +550,9 @@ function openAccount(){
   const profile = getProfile();
   const sheet = document.getElementById('menuSheet');
   if(profile){
+    const points = getPoints();
+    const wishCount = getWishlist().length;
+    const myOrders = getMyOrders();
     sheet.innerHTML = `
       <div class="sheet-head"><h2>حسابي</h2><button class="close-x" id="closeMenuX">✕</button></div>
       <div class="admin-card">
@@ -472,17 +560,82 @@ function openAccount(){
         <p style="font-size:12.5px;color:#6a5a4c;line-height:1.8;">📧 ${profile.email||'—'}<br>📱 ${profile.phone}</p>
         <p class="note" style="margin-top:8px;">بياناتك محفوظة على جهازك ده بس، وهتتعبى تلقائياً في أي طلب جديد.</p>
       </div>
+      <div class="admin-card" style="text-align:center;">
+        <div style="font-size:26px;font-weight:800;color:var(--primary);">🎁 ${points} نقطة</div>
+        <p style="font-size:11.5px;color:#7a6a5c;margin-top:4px;">بتكسب نقطة لكل 10 ج.م تصرفهم — كلم الفرع عند الطلب لاستبدالها بخصم.</p>
+      </div>
+      <button class="secondary-btn" id="viewWishlistBtn">❤️ المفضلة (${wishCount})</button>
+      <button class="secondary-btn" id="viewMyOrdersBtn">📦 طلباتي (${myOrders.length})</button>
+      ${myOrders.length>0 ? `<button class="secondary-btn" id="reorderBtn">🔁 أعد آخر طلب</button>` : ''}
       <button class="secondary-btn" id="editProfileBtn">تعديل البيانات</button>
       <button class="secondary-btn" id="logoutProfileBtn" style="color:#a83030;">تسجيل خروج من هذا الجهاز</button>
     `;
     document.getElementById('editProfileBtn').onclick = ()=>renderProfileForm(profile);
     document.getElementById('logoutProfileBtn').onclick = ()=>{ clearProfile(); toast('تم تسجيل الخروج'); openAccount(); };
+    document.getElementById('viewWishlistBtn').onclick = renderWishlistSheet;
+    document.getElementById('viewMyOrdersBtn').onclick = renderMyOrdersSheet;
+    if(myOrders.length>0){
+      document.getElementById('reorderBtn').onclick = ()=>{
+        const last = myOrders[0];
+        last.items.forEach(it=>{
+          const exists = state.products.find(p=>p.id===it.id);
+          if(exists) setCartQty(it.id, it.qty);
+        });
+        toast('تمت إضافة أصناف آخر طلب للسلة 🛍️');
+        closeMenu();
+        openCart();
+      };
+    }
   } else {
     renderProfileForm(null);
   }
   document.getElementById('closeMenuX') && (document.getElementById('closeMenuX').onclick = closeMenu);
   document.getElementById('menuOverlay').classList.add('show');
 }
+
+function renderWishlistSheet(){
+  const sheet = document.getElementById('menuSheet');
+  const ids = getWishlist();
+  const items = state.products.filter(p=>ids.includes(p.id));
+  sheet.innerHTML = `
+    <div class="sheet-head"><h2>❤️ المفضلة</h2><button class="close-x" id="closeMenuX">✕</button></div>
+    ${items.length===0 ? `<div class="empty-state">لسه معملتش أي حاجة في المفضلة 🤍</div>` : items.map(p=>`
+      <div class="cart-item">
+        <div class="cart-item-img">${p.image?`<img src="${p.image}">`:p.emoji}</div>
+        <div class="cart-item-info">
+          <div class="name">${p.name}</div>
+          <div class="price">${money(p.price)}</div>
+        </div>
+        <button class="small-btn edit" data-addwish="${p.id}">أضف للسلة</button>
+      </div>`).join('')}
+    <button class="secondary-btn" id="backToAccount">◄ رجوع لحسابي</button>
+  `;
+  document.getElementById('closeMenuX').onclick = closeMenu;
+  document.getElementById('backToAccount').onclick = openAccount;
+  sheet.querySelectorAll('[data-addwish]').forEach(b=>b.onclick=()=>{
+    setCartQty(b.dataset.addwish, getCartQty(b.dataset.addwish)+1);
+    toast('تمت الإضافة للسلة 🛍️');
+  });
+}
+
+function renderMyOrdersSheet(){
+  const sheet = document.getElementById('menuSheet');
+  const orders = getMyOrders();
+  sheet.innerHTML = `
+    <div class="sheet-head"><h2>📦 طلباتي</h2><button class="close-x" id="closeMenuX">✕</button></div>
+    ${orders.length===0 ? `<div class="empty-state">مفيش طلبات لسه 🧺</div>` : orders.map(o=>`
+      <div class="order-card">
+        <div class="top-row"><span>${new Date(o.date).toLocaleDateString('ar-EG')}</span><span>${money(o.total)}</span></div>
+        <div>${o.items.map(i=>i.name+' ×'+i.qty).join('، ')}</div>
+        <div style="margin-top:4px;color:var(--primary);font-weight:700;">الحالة: ${o.status}</div>
+      </div>`).join('')}
+    <p class="note" style="margin-top:8px;">الحالة هنا بيانات تقريبية محفوظة على جهازك، للتأكيد النهائي على الطلب تواصل مع الفرع عبر واتساب.</p>
+    <button class="secondary-btn" id="backToAccount">◄ رجوع لحسابي</button>
+  `;
+  document.getElementById('closeMenuX').onclick = closeMenu;
+  document.getElementById('backToAccount').onclick = openAccount;
+}
+
 function renderProfileForm(existing){
   const sheet = document.getElementById('menuSheet');
   sheet.innerHTML = `
@@ -630,7 +783,7 @@ function renderAdminProducts(body){
   list.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{
     if(confirm('هل تريد حذف هذا المنتج؟')){
       state.products = state.products.filter(p=>p.id!==b.dataset.del);
-      saveState(); renderAdmin(); renderProducts(); toast('تم الحذف');
+      markUnpublished(); saveState(); renderAdmin(); renderProducts(); toast('تم الحذف');
     }
   });
   list.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openEditProduct(b.dataset.edit));
@@ -646,6 +799,12 @@ function productFormHtml(prefix=''){
     </div>
     <div class="field"><label>القسم</label><select id="${prefix}pf_cat">${cats}</select></div>
     <div class="field"><label>الوصف</label><textarea id="${prefix}pf_desc"></textarea></div>
+    <div class="row2">
+      <div class="field"><label>التقييم (0-5، اختياري)</label><input type="number" step="0.1" min="0" max="5" id="${prefix}pf_rating"></div>
+      <div class="field" style="display:flex;align-items:flex-end;">
+        <label class="radio-opt" style="width:100%;"><input type="checkbox" id="${prefix}pf_featured"> 🏆 منتج مميز (الأكثر مبيعاً)</label>
+      </div>
+    </div>
     <div class="field"><label>صورة المنتج (اختياري — إذا لم تُضف صورة سيظهر إيموجي)</label><input type="file" accept="image/*" id="${prefix}pf_img"></div>
     <div id="${prefix}pf_preview" style="margin-bottom:10px;"></div>
   `;
@@ -689,6 +848,8 @@ function bindProductForm(prefix, onSave, existing){
     document.getElementById(prefix+'pf_oldprice').value = existing.oldPrice||'';
     document.getElementById(prefix+'pf_cat').value = existing.category;
     document.getElementById(prefix+'pf_desc').value = existing.desc||'';
+    document.getElementById(prefix+'pf_rating').value = existing.rating||'';
+    document.getElementById(prefix+'pf_featured').checked = !!existing.featured;
   }
   const saveBtnId = existing ? prefix+'saveEditProduct' : 'saveNewProduct';
   document.getElementById(saveBtnId).onclick = ()=>{
@@ -697,13 +858,15 @@ function bindProductForm(prefix, onSave, existing){
     const oldPrice = parseFloat(document.getElementById(prefix+'pf_oldprice').value)||0;
     const category = document.getElementById(prefix+'pf_cat').value;
     const desc = document.getElementById(prefix+'pf_desc').value.trim();
+    const rating = parseFloat(document.getElementById(prefix+'pf_rating').value)||0;
+    const featured = document.getElementById(prefix+'pf_featured').checked;
     if(!name || !price){ toast('اكتب اسم المنتج والسعر'); return; }
     if(existing){
-      Object.assign(existing, {name, price, oldPrice, category, desc, image: tempImage});
+      Object.assign(existing, {name, price, oldPrice, category, desc, rating, featured, image: tempImage});
     } else {
-      state.products.push({id:uid('p_'), name, price, oldPrice, category, desc, emoji:'🍬', image:tempImage});
+      state.products.push({id:uid('p_'), name, price, oldPrice, category, desc, rating, featured, emoji:'🍬', image:tempImage});
     }
-    saveState(); renderProducts(); onSave();
+    markUnpublished(); saveState(); renderProducts(); onSave();
   };
 }
 
@@ -739,7 +902,7 @@ function renderAdminBranches(body){
     const phone = document.getElementById('br_phone').value.trim();
     if(!name||!phone){ toast('اكتب اسم الفرع والرقم'); return; }
     state.branches.push({id:Date.now(), name, phone});
-    saveState(); renderAdmin(); toast('تمت إضافة الفرع');
+    markUnpublished(); saveState(); renderAdmin(); toast('تمت إضافة الفرع');
   };
   const list = document.getElementById('branchList');
   list.innerHTML = state.branches.map(b=>`
@@ -752,7 +915,7 @@ function renderAdminBranches(body){
     if(state.branches.length<=1){ toast('لازم يبقى فرع واحد على الأقل'); return; }
     if(confirm('حذف هذا الفرع؟')){
       state.branches = state.branches.filter(b=>b.id!=btn.dataset.del);
-      saveState(); renderAdmin(); toast('تم الحذف');
+      markUnpublished(); saveState(); renderAdmin(); toast('تم الحذف');
     }
   });
 }
@@ -800,7 +963,7 @@ function renderAdminAppearance(body){
     s.bg = document.getElementById('ap_bg').value;
     s.ink = document.getElementById('ap_ink').value;
     s.font = document.getElementById('ap_font').value;
-    saveState(); applyTheme(); toast('تم حفظ المظهر');
+    markUnpublished(); saveState(); applyTheme(); toast('تم حفظ المظهر');
   };
 }
 
@@ -820,7 +983,7 @@ function renderAdminPayment(body){
     pay.vodafoneCash = document.getElementById('pay_vf').value.trim();
     pay.instapay = document.getElementById('pay_ip').value.trim();
     pay.codEnabled = document.getElementById('pay_cod').checked;
-    saveState(); toast('تم حفظ وسائل الدفع');
+    markUnpublished(); saveState(); toast('تم حفظ وسائل الدفع');
   };
 }
 
@@ -867,7 +1030,9 @@ function renderAdminSettings(body){
     <div class="admin-card">
       <h3>🚀 نشر التحديثات لكل العملاء</h3>
       <p style="font-size:12px;color:#7a6a5c;line-height:1.8;">أي تعديل بتعمله هنا (منتجات، أسعار، صور) بيتخزن على جهازك بس. عشان يظهر عند كل العملاء، دوس الزرار ده وارفع الملف اللي هينزل باسم <b>data.json</b> على نفس مستودع GitHub بتاعك (بيستبدل القديم لو موجود). بعد الرفع والـ Commit، كل حد يفتح التطبيق (حتى لو نسخته مثبتة كـ APK) هيشوف التحديث الجديد.</p>
+      ${hasUnpublishedChanges() ? `<div class="note" style="border-color:#a83030;background:#fbe4e4;color:#8c1c1c;margin-bottom:8px;">⚠️ عندك تعديلات لسه ما اتنشرتش. نزّل الملف وارفعه على GitHub، وبعدين دوس "تم الرفع" تحت.</div>` : ''}
       <button class="primary-btn" id="publishData">تحميل ملف التحديث (data.json) 🚀</button>
+      <button class="secondary-btn" id="confirmPublished">✅ تم رفعه على GitHub بنجاح</button>
     </div>
     <div class="admin-card">
       <h3>نسخة احتياطية</h3>
@@ -921,7 +1086,7 @@ function renderAdminSettings(body){
         if(!state.categoryImages) state.categoryImages = {};
         state.categoryImages[newName] = pendingCatImages[idx];
       }
-      saveState(); renderAdmin(); renderCats(); renderProducts();
+      markUnpublished(); saveState(); renderAdmin(); renderCats(); renderProducts();
       toast('تم حفظ القسم');
     };
   });
@@ -929,15 +1094,15 @@ function renderAdminSettings(body){
     const name = b.dataset.delcat;
     state.categories = state.categories.filter(c=>c!==name);
     if(state.categoryImages) delete state.categoryImages[name];
-    saveState(); renderAdmin(); renderCats(); renderProducts();
+    markUnpublished(); saveState(); renderAdmin(); renderCats(); renderProducts();
   });
   document.getElementById('addCatBtn').onclick = ()=>{
     const v = document.getElementById('newCatInput').value.trim();
-    if(v && !state.categories.includes(v)){ state.categories.push(v); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
+    if(v && !state.categories.includes(v)){ state.categories.push(v); markUnpublished(); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
   };
   document.getElementById('savePass').onclick = ()=>{
     const v = document.getElementById('newPassInput').value.trim();
-    if(v){ state.adminPassword = v; saveState(); toast('تم تحديث كلمة المرور'); }
+    if(v){ state.adminPassword = v; markUnpublished(); saveState(); toast('تم تحديث كلمة المرور'); }
   };
   document.getElementById('publishData').onclick = ()=>{
     const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
@@ -945,7 +1110,12 @@ function renderAdminSettings(body){
     a.href = URL.createObjectURL(blob);
     a.download = 'data.json';
     a.click();
-    toast('نزّل data.json وارفعه على GitHub عشان التحديثات تظهر للكل');
+    toast('نزّل data.json — ارفعه على GitHub وبعدين دوس "تم الرفع"');
+  };
+  document.getElementById('confirmPublished').onclick = ()=>{
+    clearUnpublished();
+    renderAdminSettings(body);
+    toast('تمام، هيتاكد من التحديث في المرة الجاية اللي التطبيق يفتح فيها 👍');
   };
   document.getElementById('exportData').onclick = ()=>{
     const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
@@ -962,7 +1132,7 @@ function renderAdminSettings(body){
       try{
         const parsed = JSON.parse(reader.result);
         state = Object.assign(structuredClone(DEFAULT_STATE), parsed);
-        saveState(); applyTheme(); renderCats(); renderProducts(); renderAdmin();
+        markUnpublished(); saveState(); applyTheme(); renderCats(); renderProducts(); renderAdmin();
         toast('تم استيراد البيانات بنجاح');
       }catch(e){ toast('ملف غير صالح'); }
     };
@@ -982,16 +1152,21 @@ function renderAdminSettings(body){
    ========================================================= */
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
-  try{
-    const res = await fetch('data.json', {cache:'no-store'});
-    if(res.ok){
-      const remote = await res.json();
-      if(remote && remote.products){
-        state = Object.assign(structuredClone(DEFAULT_STATE), remote);
-        saveState();
+  if(hasUnpublishedChanges()){
+    // فيه تعديلات لسه ما اتنشرتش، منسيبش تحميل الموقع يمسحها بنسخة قديمة من الإنترنت
+    toast('عندك تعديلات لسه ما اتنشرتش — انشرها الأول من الإعدادات قبل ما تعمل تعديل جديد');
+  } else {
+    try{
+      const res = await fetch('data.json', {cache:'no-store'});
+      if(res.ok){
+        const remote = await res.json();
+        if(remote && remote.products){
+          state = Object.assign(structuredClone(DEFAULT_STATE), remote);
+          saveState();
+        }
       }
-    }
-  }catch(e){ /* مفيش data.json لسه، أو مفيش إنترنت — هيشتغل بالبيانات المحفوظة محلياً */ }
+    }catch(e){ /* مفيش data.json لسه، أو مفيش إنترنت — هيشتغل بالبيانات المحفوظة محلياً */ }
+  }
   applyTheme();
   renderCats();
   renderProducts();
