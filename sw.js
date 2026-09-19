@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sweethome-cache-v4';
+const CACHE_NAME = 'sweethome-cache-v5';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -29,7 +29,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = event.request.url;
-  const isFreshFirst = url.includes('data.json') || url.endsWith('.html') || url.endsWith('/');
+  const isFreshFirst = url.includes('data.json') || url.endsWith('.html') || url.endsWith('/') || url.endsWith('.css') || url.endsWith('.js');
 
   if (isFreshFirst) {
     // شبكة أولاً عشان التحديثات (data.json) تظهر فوراً، مع نسخة محفوظة كخطة بديلة لو الإنترنت مقطوع
