@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Sweet Home - أيقونات الأقسام</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Tahoma', 'Segoe UI', sans-serif;
+    background: #FBF3E4;
+    padding: 24px 16px 60px;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    color: #8B2E2E;
+    font-size: 26px;
+    margin: 0 0 4px;
+  }
+  .header p {
+    color: #B5482F;
+    font-size: 14px;
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #FFFDF8;
+    border: 1px solid #EEDFC2;
+    border-radius: 14px;
+    padding: 10px 6px 8px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(139,46,46,0.08);
+  }
+  .icon-wrap {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 6px;
+  }
+  .icon-wrap svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #4A2C1D;
+    line-height: 1.3;
+  }
+  @media (max-width: 380px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Sweet Home</h1>
+  <p>أيقونات الأقسام - مجسّمة ومصغّرة</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1. القسم الغربي (جاتوهات وتورت) -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="cakeBase" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFF6E8"/>
+            <stop offset="100%" stop-color="#F0D9B5"/>
+          </linearGradient>
+          <linearGradient id="cakeTop" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFD9E8"/>
+            <stop offset="100%" stop-color="#F5A8C4"/>
+          </linearGradient>
+          <radialGradient id="cherryG" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#FF8A8A"/>
+            <stop offset="100%" stop-color="#C0233A"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="82" rx="34" ry="7" fill="#D9B98A" opacity="0.5"/>
+        <path d="M20 78 L20 55 Q20 50 25 50 L75 50 Q80 50 80 55 L80 78 Q80 84 74 84 L26 84 Q20 84 20 78 Z" fill="url(#cakeBase)" stroke="#E0BE8E" stroke-width="1"/>
+        <rect x="20" y="60" width="60" height="6" fill="#FFFFFF" opacity="0.6"/>
+        <path d="M24 50 Q30 40 36 50 Q42 40 48 50 Q54 40 60 50 Q66 40 72 50 Q76 44 76 50 L76 55 L24 55 Z" fill="url(#cakeTop)"/>
+        <circle cx="50" cy="38" r="7" fill="url(#cherryG)"/>
+        <circle cx="46" cy="35" r="2" fill="#FFB3B3" opacity="0.8"/>
+        <path d="M50 31 Q52 24 57 22" stroke="#4C7A3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M56 22 Q60 20 62 24 Q57 26 56 22Z" fill="#6FAE4E"/>
+      </svg>
+    </div>
+    <div class="label">القسم الغربي<br>(جاتوهات وتورت)</div>
+  </div>
+
+  <!-- 2. حلويات شرقية -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="baklavaG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F7C873"/>
+            <stop offset="100%" stop-color="#C8862A"/>
+          </linearGradient>
+          <linearGradient id="pistG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#B7D989"/>
+            <stop offset="100%" stop-color="#7FA84D"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="50" cy="80" rx="36" ry="6" fill="#B5742A" opacity="0.3"/>
+        <g>
+          <path d="M18 68 L50 78 L82 68 L82 60 L50 70 L18 60 Z" fill="#A6631F"/>
+          <path d="M18 60 L50 70 L82 60 L50 50 Z" fill="url(#baklavaG)" stroke="#A6631F" stroke-width="1"/>
+          <path d="M28 58 L50 65 L72 58 M34 55 L50 60 L66 55 M50 50 L50 65" stroke="#A6631F" stroke-width="1" opacity="0.5" fill="none"/>
+        </g>
+        <circle cx="50" cy="55" r="5" fill="url(#pistG)"/>
+        <circle cx="36" cy="60" r="3.5" fill="url(#pistG)"/>
+        <circle cx="64" cy="60" r="3.5" fill="url(#pistG)"/>
+        <path d="M20 58 Q50 42 80 58" stroke="#FFE9A8" stroke-width="2" fill="none" opacity="0.7" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="label">حلويات شرقية</div>
+  </div>
+
+  <!-- 3. قسم النواعم -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <radialGradient id="softG1" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#FFE3F0"/>
+            <stop offset="100%" stop-color="#F2A8C7"/>
+          </radialGradient>
+          <radialGradient id="softG2" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#E6F3FF"/>
+            <stop offset="100%" stop-color="#A9C9EE"/>
+          </radialGradient>
+          <radialGradient id="softG3" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#FFF6DA"/>
+            <stop offset="100%" stop-color="#F0CE84"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="80" rx="30" ry="6" fill="#D9A6B8" opacity="0.3"/>
+        <circle cx="34" cy="60" r="17" fill="url(#softG1)"/>
+        <circle cx="66" cy="60" r="17" fill="url(#softG2)"/>
+        <circle cx="50" cy="42" r="19" fill="url(#softG3)"/>
+        <circle cx="43" cy="36" r="4" fill="#FFFFFF" opacity="0.6"/>
+        <circle cx="27" cy="55" r="3" fill="#FFFFFF" opacity="0.6"/>
+        <circle cx="59" cy="55" r="3" fill="#FFFFFF" opacity="0.6"/>
+      </svg>
+    </div>
+    <div class="label">قسم النواعم</div>
+  </div>
+
+  <!-- 4. قسم المخبوزات والنواشف -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="breadG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F0C285"/>
+            <stop offset="100%" stop-color="#B87A32"/>
+          </linearGradient>
+          <linearGradient id="croissG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#F6D9A0"/>
+            <stop offset="100%" stop-color="#C68A3D"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="50" cy="80" rx="34" ry="6" fill="#8B5A22" opacity="0.25"/>
+        <path d="M25 75 Q20 55 35 48 Q42 40 50 48 Q58 40 65 48 Q80 55 75 75 Z" fill="url(#breadG)" stroke="#A5691F" stroke-width="1"/>
+        <path d="M35 48 Q42 55 35 65 M50 48 Q54 58 50 68 M65 48 Q58 55 65 65" stroke="#8B5A22" stroke-width="1.5" fill="none" opacity="0.5"/>
+        <path d="M60 72 Q64 60 74 58 Q84 56 82 66 Q80 74 70 76 Q64 77 60 72Z" fill="url(#croissG)" stroke="#A5691F" stroke-width="0.8"/>
+        <circle cx="30" cy="42" r="1.5" fill="#F4E3B0"/>
+        <circle cx="45" cy="38" r="1.5" fill="#F4E3B0"/>
+        <circle cx="58" cy="40" r="1.5" fill="#F4E3B0"/>
+      </svg>
+    </div>
+    <div class="label">قسم المخبوزات<br>والنواشف</div>
+  </div>
+
+  <!-- 5. بوكسات العيد -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="boxFront" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E85B5B"/>
+            <stop offset="100%" stop-color="#A82424"/>
+          </linearGradient>
+          <linearGradient id="boxTop" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#FF8A8A"/>
+            <stop offset="100%" stop-color="#D63A3A"/>
+          </linearGradient>
+          <linearGradient id="ribbonG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFE9A8"/>
+            <stop offset="100%" stop-color="#E0B23C"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="50" cy="83" rx="32" ry="6" fill="#7A1E1E" opacity="0.2"/>
+        <path d="M22 45 L50 32 L78 45 L50 58 Z" fill="url(#boxTop)"/>
+        <path d="M22 45 L22 72 L50 85 L50 58 Z" fill="url(#boxFront)"/>
+        <path d="M78 45 L78 72 L50 85 L50 58 Z" fill="#8C1E1E"/>
+        <rect x="46" y="32" width="8" height="53" fill="url(#ribbonG)" transform="skewY(0)"/>
+        <path d="M22 45 L50 58 L78 45" fill="none" stroke="#7A1E1E" stroke-width="1" opacity="0.4"/>
+        <path d="M42 30 Q46 20 50 28 Q54 20 58 30 Q58 35 50 33 Q42 35 42 30Z" fill="url(#ribbonG)" stroke="#C99A2A" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="label">بوكسات العيد</div>
+  </div>
+
+  <!-- 6. قسم الشيكولاته -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="chocG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8B5A3C"/>
+            <stop offset="100%" stop-color="#4A2A18"/>
+          </linearGradient>
+          <linearGradient id="chocShine" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#B8825A"/>
+            <stop offset="100%" stop-color="#6B3E24"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="50" cy="80" rx="30" ry="6" fill="#3A2010" opacity="0.3"/>
+        <rect x="24" y="35" width="52" height="42" rx="6" fill="url(#chocG)"/>
+        <rect x="24" y="35" width="52" height="10" rx="4" fill="url(#chocShine)" opacity="0.6"/>
+        <line x1="50" y1="35" x2="50" y2="77" stroke="#2E1A0E" stroke-width="2"/>
+        <line x1="24" y1="56" x2="76" y2="56" stroke="#2E1A0E" stroke-width="2"/>
+        <rect x="27" y="38" width="20" height="15" rx="2" fill="#6B3E24" opacity="0.5"/>
+        <rect x="53" y="59" width="20" height="15" rx="2" fill="#6B3E24" opacity="0.5"/>
+        <circle cx="50" cy="30" r="6" fill="#C9986A"/>
+      </svg>
+    </div>
+    <div class="label">قسم الشيكولاته</div>
+  </div>
+
+  <!-- 7. قسم الصباحيات -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <radialGradient id="sunG" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#FFE9A0"/>
+            <stop offset="100%" stop-color="#F5B942"/>
+          </radialGradient>
+          <linearGradient id="cupG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#E6DCC8"/>
+          </linearGradient>
+          <linearGradient id="coffeeG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#8A5A34"/>
+            <stop offset="100%" stop-color="#5C3A1E"/>
+          </linearGradient>
+        </defs>
+        <circle cx="30" cy="28" r="12" fill="url(#sunG)"/>
+        <g stroke="#F5B942" stroke-width="2" stroke-linecap="round">
+          <line x1="30" y1="10" x2="30" y2="14"/>
+          <line x1="14" y1="28" x2="18" y2="28"/>
+          <line x1="18" y1="14" x2="20" y2="17"/>
+        </g>
+        <ellipse cx="52" cy="82" rx="26" ry="5" fill="#B08A55" opacity="0.3"/>
+        <path d="M35 55 L70 55 L66 82 Q65 86 60 86 L45 86 Q40 86 39 82 Z" fill="url(#cupG)" stroke="#D8C9A8" stroke-width="1"/>
+        <ellipse cx="52.5" cy="55" rx="17.5" ry="5" fill="url(#coffeeG)"/>
+        <path d="M70 60 Q82 60 80 70 Q78 78 68 76" fill="none" stroke="#D8C9A8" stroke-width="4"/>
+        <path d="M44 46 Q42 40 46 36 M52 46 Q50 40 54 36 M60 46 Q58 40 62 36" stroke="#D8C9A8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="label">قسم الصباحيات</div>
+  </div>
+
+  <!-- 8. رمضانيات -->
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="lanternBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F7D372"/>
+            <stop offset="100%" stop-color="#C8942E"/>
+          </linearGradient>
+          <radialGradient id="lanternGlow" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stop-color="#FFF3C0"/>
+            <stop offset="100%" stop-color="#F0B33E"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="50" cy="88" rx="18" ry="4" fill="#8B6A1E" opacity="0.3"/>
+        <line x1="50" y1="10" x2="50" y2="20" stroke="#8B6A1E" stroke-width="2"/>
+        <path d="M42 20 L58 20 L60 26 L40 26 Z" fill="#C8942E"/>
+        <path d="M38 26 Q30 45 38 65 Q40 72 50 72 Q60 72 62 65 Q70 45 62 26 Z" fill="url(#lanternBody)" stroke="#A5731E" stroke-width="1"/>
+        <ellipse cx="50" cy="46" rx="12" ry="16" fill="url(#lanternGlow)" opacity="0.9"/>
+        <path d="M38 26 Q50 34 62 26 M38 65 Q50 58 62 65" stroke="#A5731E" stroke-width="1.2" fill="none"/>
+        <line x1="50" y1="26" x2="50" y2="65" stroke="#A5731E" stroke-width="1" opacity="0.5"/>
+        <path d="M44 72 L56 72 L54 80 L46 80 Z" fill="#8B6A1E"/>
+        <path d="M50 80 L50 88 M45 84 L55 84" stroke="#8B6A1E" stroke-width="1.5"/>
+        <circle cx="30" cy="30" r="1.5" fill="#FFE9A0"/>
+        <circle cx="72" cy="35" r="1" fill="#FFE9A0"/>
+        <circle cx="68" cy="20" r="1.3" fill="#FFE9A0"/>
+      </svg>
+    </div>
+    <div class="label">رمضانيات</div>
+  </div>
+
+</div>
+
+</body>
+</html>
