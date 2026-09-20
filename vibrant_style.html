@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Sweet Home</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tahoma', 'Segoe UI', sans-serif;
+    background: #F5F2ED;
+    padding-bottom: 75px;
+  }
+
+  /* ===== Header ===== */
+  .topbar {
+    background: linear-gradient(135deg, #1A1F2E 0%, #131921 100%);
+    padding: 14px 16px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .topbar::after {
+    content: "";
+    position: absolute;
+    top: -40px; left: -30px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(255,153,0,0.25), transparent 70%);
+  }
+  .topbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+  .icon-btn {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: #FFB84D;
+    font-size: 17px;
+  }
+  .brand { text-align: center; }
+  .brand h1 {
+    color: #FFFFFF;
+    font-size: 21px;
+    font-weight: 800;
+  }
+  .brand p {
+    color: #FFB84D;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .logo-badge {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(180deg,#FFD27A,#FF9900);
+    border: 2px solid rgba(255,255,255,0.9);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .search-pill {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #999;
+    font-size: 13px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== Section title ===== */
+  .section-title {
+    padding: 18px 16px 10px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1A1F2E;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .section-title .dot {
+    width: 6px; height: 18px;
+    background: #FF9900;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  /* ===== Grid ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 16px 12px 14px;
+    position: relative;
+    overflow: hidden;
+    min-height: 128px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  }
+  .card::after {
+    content: "";
+    position: absolute;
+    bottom: -30px; left: -20px;
+    width: 100px; height: 100px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+  }
+  .card .icon-float {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    align-self: flex-end;
+    position: relative;
+    z-index: 1;
+  }
+  .card .icon-float svg {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.15));
+  }
+  .card .card-text {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+  }
+  .card .title {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    line-height: 1.3;
+  }
+  .card .sub {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 2px;
+  }
+
+  /* Per-card gradient backgrounds */
+  .c1 { background: linear-gradient(135deg, #FF6B6B, #C1272D); }
+  .c2 { background: linear-gradient(135deg, #FFB347, #E8871E); }
+  .c3 { background: linear-gradient(135deg, #FF8FB1, #E85D9C); }
+  .c4 { background: linear-gradient(135deg, #D9A15B, #A9702E); }
+  .c5 { background: linear-gradient(135deg, #A64AC9, #6E2C8E); }
+  .c6 { background: linear-gradient(135deg, #8B5A3C, #4A2A18); }
+  .c7 { background: linear-gradient(135deg, #4FB0C6, #2A7D96); }
+  .c8 { background: linear-gradient(135deg, #F0B33E, #C8942E); }
+
+  footer.navbar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, #1A1F2E 0%, #131921 100%);
+    display: flex;
+    justify-content: space-around;
+    padding: 9px 0 11px;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+  }
+  .navitem {
+    text-align: center;
+    color: #8A8F9B;
+    font-size: 10.5px;
+  }
+  .navitem.active { color: #FF9900; }
+  .navitem .ni-icon { font-size: 19px; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="icon-btn">☰</div>
+      <div class="brand">
+        <h1>Sweet Home</h1>
+        <p>بيت الحلويات... دائماً أحلى</p>
+      </div>
+      <div class="logo-badge"></div>
+    </div>
+    <div class="search-pill">🔍 ابحث عن حلاك المفضل...</div>
+  </div>
+
+  <div class="section-title"><span class="dot"></span> تسوّق حسب القسم</div>
+
+  <div class="grid">
+
+    <!-- الغربي -->
+    <div class="card c1">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="a1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFF6E8"/><stop offset="100%" stop-color="#F0D9B5"/>
+            </linearGradient>
+            <linearGradient id="a2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFD9E8"/><stop offset="100%" stop-color="#F5A8C4"/>
+            </linearGradient>
+            <radialGradient id="a3" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#FF8A8A"/><stop offset="100%" stop-color="#C0233A"/>
+            </radialGradient>
+          </defs>
+          <path d="M20 78 L20 55 Q20 50 25 50 L75 50 Q80 50 80 55 L80 78 Q80 84 74 84 L26 84 Q20 84 20 78 Z" fill="url(#a1)"/>
+          <path d="M24 50 Q30 40 36 50 Q42 40 48 50 Q54 40 60 50 Q66 40 72 50 Q76 44 76 50 L76 55 L24 55 Z" fill="url(#a2)"/>
+          <circle cx="50" cy="38" r="7" fill="url(#a3)"/>
+          <path d="M50 31 Q52 24 57 22" stroke="#4C7A3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">القسم الغربي</div>
+        <div class="sub">جاتوهات وتورت</div>
+      </div>
+    </div>
+
+    <!-- حلويات شرقية -->
+    <div class="card c2">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="b1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F7C873"/><stop offset="100%" stop-color="#C8862A"/>
+            </linearGradient>
+            <linearGradient id="b2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#B7D989"/><stop offset="100%" stop-color="#7FA84D"/>
+            </linearGradient>
+          </defs>
+          <path d="M18 68 L50 78 L82 68 L82 60 L50 70 L18 60 Z" fill="#A6631F"/>
+          <path d="M18 60 L50 70 L82 60 L50 50 Z" fill="url(#b1)"/>
+          <circle cx="50" cy="55" r="5" fill="url(#b2)"/>
+          <circle cx="36" cy="60" r="3.5" fill="url(#b2)"/>
+          <circle cx="64" cy="60" r="3.5" fill="url(#b2)"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">حلويات شرقية</div>
+        <div class="sub">بقلاوة ومعمول</div>
+      </div>
+    </div>
+
+    <!-- النواعم -->
+    <div class="card c3">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <radialGradient id="c1g" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#FFE3F0"/><stop offset="100%" stop-color="#F2A8C7"/>
+            </radialGradient>
+            <radialGradient id="c2g" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#E6F3FF"/><stop offset="100%" stop-color="#A9C9EE"/>
+            </radialGradient>
+            <radialGradient id="c3g" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#FFF6DA"/><stop offset="100%" stop-color="#F0CE84"/>
+            </radialGradient>
+          </defs>
+          <circle cx="34" cy="60" r="17" fill="url(#c1g)"/>
+          <circle cx="66" cy="60" r="17" fill="url(#c2g)"/>
+          <circle cx="50" cy="42" r="19" fill="url(#c3g)"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">قسم النواعم</div>
+        <div class="sub">حلويات طرية</div>
+      </div>
+    </div>
+
+    <!-- المخبوزات -->
+    <div class="card c4">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="d1g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F0C285"/><stop offset="100%" stop-color="#B87A32"/>
+            </linearGradient>
+            <linearGradient id="d2g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#F6D9A0"/><stop offset="100%" stop-color="#C68A3D"/>
+            </linearGradient>
+          </defs>
+          <path d="M25 75 Q20 55 35 48 Q42 40 50 48 Q58 40 65 48 Q80 55 75 75 Z" fill="url(#d1g)"/>
+          <path d="M60 72 Q64 60 74 58 Q84 56 82 66 Q80 74 70 76 Q64 77 60 72Z" fill="url(#d2g)"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">المخبوزات والنواشف</div>
+        <div class="sub">خبز ومخبوزات طازة</div>
+      </div>
+    </div>
+
+    <!-- بوكسات العيد -->
+    <div class="card c5">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="e1g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFD966"/><stop offset="100%" stop-color="#E0A82E"/>
+            </linearGradient>
+            <linearGradient id="e2g" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FFEA9E"/><stop offset="100%" stop-color="#F0C954"/>
+            </linearGradient>
+          </defs>
+          <path d="M22 45 L50 32 L78 45 L50 58 Z" fill="url(#e2g)"/>
+          <path d="M22 45 L22 72 L50 85 L50 58 Z" fill="url(#e1g)"/>
+          <path d="M78 45 L78 72 L50 85 L50 58 Z" fill="#C8942E"/>
+          <rect x="46" y="32" width="8" height="53" fill="#A64AC9"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">بوكسات العيد</div>
+        <div class="sub">للمناسبات الخاصة</div>
+      </div>
+    </div>
+
+    <!-- الشيكولاته -->
+    <div class="card c6">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="f1g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#C6905F"/><stop offset="100%" stop-color="#8B5A3C"/>
+            </linearGradient>
+          </defs>
+          <rect x="24" y="35" width="52" height="42" rx="6" fill="url(#f1g)"/>
+          <line x1="50" y1="35" x2="50" y2="77" stroke="#4A2A18" stroke-width="2"/>
+          <line x1="24" y1="56" x2="76" y2="56" stroke="#4A2A18" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">قسم الشيكولاته</div>
+        <div class="sub">شوكولاتة فاخرة</div>
+      </div>
+    </div>
+
+    <!-- الصباحيات -->
+    <div class="card c7">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="g1g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="#E6DCC8"/>
+            </linearGradient>
+            <linearGradient id="g2g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8A5A34"/><stop offset="100%" stop-color="#5C3A1E"/>
+            </linearGradient>
+          </defs>
+          <circle cx="30" cy="28" r="11" fill="#FFD966"/>
+          <path d="M35 55 L70 55 L66 82 Q65 86 60 86 L45 86 Q40 86 39 82 Z" fill="url(#g1g)"/>
+          <ellipse cx="52.5" cy="55" rx="17.5" ry="5" fill="url(#g2g)"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">قسم الصباحيات</div>
+        <div class="sub">فطور ومشروبات</div>
+      </div>
+    </div>
+
+    <!-- رمضانيات -->
+    <div class="card c8">
+      <div class="icon-float">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="h1g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#F7D372"/><stop offset="100%" stop-color="#C8942E"/>
+            </linearGradient>
+            <radialGradient id="h2g" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#FFF3C0"/><stop offset="100%" stop-color="#F0B33E"/>
+            </radialGradient>
+          </defs>
+          <path d="M38 26 Q30 45 38 65 Q40 72 50 72 Q60 72 62 65 Q70 45 62 26 Z" fill="url(#h1g)"/>
+          <ellipse cx="50" cy="46" rx="12" ry="16" fill="url(#h2g)" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="card-text">
+        <div class="title">رمضانيات</div>
+        <div class="sub">تشكيلة شهر رمضان</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="navbar">
+    <div class="navitem active">
+      <div class="ni-icon">🏠</div>
+      الرئيسية
+    </div>
+    <div class="navitem">
+      <div class="ni-icon">🍽️</div>
+      الأقسام
+    </div>
+    <div class="navitem">
+      <div class="ni-icon">🛍️</div>
+      سلة المشتريات
+    </div>
+    <div class="navitem">
+      <div class="ni-icon">👤</div>
+      حسابي
+    </div>
+  </footer>
+
+</body>
+</html>
