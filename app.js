@@ -44,7 +44,6 @@ const DEFAULT_STATE = {
     {id:'p12', name:'بسكويت زبدة دنماركي', category:'كوكيز وبسكويت', price:40, oldPrice:0, desc:'بسكويت زبدة فاخر بطعم غني', emoji:'🍪', image:'', featured:false, rating:0}
   ],
   orders:[],
-  adminPassword:'admin123',
   categoryImages:{}
 };
 
@@ -575,6 +574,24 @@ const fbReady = (async ()=>{
   return { auth: authM.getAuth(app), db: fsM.getFirestore(app), A: authM, F: fsM };
 })();
 
+const firebaseReady = fbReady.then(async fb => {
+  const firstAuthState = new Promise(resolve => {
+    const unsub = fb.A.onAuthStateChanged(fb.auth, user => { unsub(); resolve(user); });
+  });
+  return Object.assign(fb, { firstAuthState });
+});
+
+async function getAdminRole(user){
+  if(!user) return false;
+  try{
+    const fb = await firebaseReady;
+    const snap = await fb.F.getDoc(fb.F.doc(fb.db,'users',user.uid));
+    if(!snap.exists()) return false;
+    const d = snap.data() || {};
+    return d.role === 'admin' || d.isAdmin === true;
+  }catch(e){ return false; }
+}
+
 function authMsg(code){
   switch(code){
     case 'auth/invalid-credential':
@@ -879,13 +896,35 @@ function renderAdmin(){
       <div class="login-box">
         <img src="${state.settings.logo||'logo.png'}">
         <h3>دخول لوحة الإدارة</h3>
-        <div class="field"><input type="password" id="adminPass" placeholder="كلمة المرور"></div>
+        <div class="field"><label>البريد الإلكتروني</label><input type="email" id="adminEmail" autocomplete="username" placeholder="name@example.com"></div>
+        <div class="field"><label>كلمة المرور</label><input type="password" id="adminPass" autocomplete="current-password" placeholder="كلمة المرور"></div>
         <button class="primary-btn" id="adminLoginBtn">دخول</button>
+        <p id="adminLoginError" style="font-size:12px;color:#a83030;margin-top:12px;display:none;"></p>
       </div>`;
-    document.getElementById('adminLoginBtn').onclick = ()=>{
-      const val = document.getElementById('adminPass').value;
-      if(val === state.adminPassword){ adminAuthed = true; adminTab='products'; renderAdmin(); }
-      else toast('كلمة المرور غير صحيحة');
+    document.getElementById('adminLoginBtn').onclick = async ()=>{
+      const email = document.getElementById('adminEmail').value.trim();
+      const pass = document.getElementById('adminPass').value;
+      const err = document.getElementById('adminLoginError');
+      const btn = document.getElementById('adminLoginBtn');
+      err.style.display='none';
+      if(!email || !pass){ err.textContent='اكتب البريد الإلكتروني وكلمة المرور'; err.style.display='block'; return; }
+      btn.disabled=true; btn.textContent='جارٍ التحقق...';
+      try{
+        const fb = await firebaseReady;
+        const cred = await fb.A.signInWithEmailAndPassword(fb.auth,email,pass);
+        const allowed = await getAdminRole(cred.user);
+        if(!allowed){
+          await fb.A.signOut(fb.auth);
+          throw new Error('not-admin');
+        }
+        adminAuthed = true;
+        adminTab='products';
+        renderAdmin();
+      }catch(e){
+        err.textContent = e.message==='not-admin' ? 'هذا الحساب ليس لديه صلاحية مدير.' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+        err.style.display='block';
+        btn.disabled=false; btn.textContent='دخول';
+      }
     };
     return;
   }
@@ -909,7 +948,6 @@ function renderAdmin(){
   if(adminTab==='settings') renderAdminSettings(body);
 }
 
-/* ---- products tab ---- */
 function renderAdminProducts(body){
   body.innerHTML = `
     <div class="admin-card">
@@ -1171,11 +1209,6 @@ function renderAdminSettings(body){
       </div>
     </div>
     <div class="admin-card">
-      <h3>كلمة مرور الإدارة</h3>
-      <div class="field"><label>كلمة مرور جديدة</label><input type="password" id="newPassInput" placeholder="اتركه فارغاً لعدم التغيير"></div>
-      <button class="primary-btn" id="savePass">تحديث كلمة المرور</button>
-    </div>
-    <div class="admin-card">
       <h3>🚀 نشر التحديثات لكل العملاء</h3>
       <p style="font-size:12px;color:#7a6a5c;line-height:1.8;">أي تعديل بتعمله هنا (منتجات، أسعار، صور) بيتخزن على جهازك بس. عشان يظهر عند كل العملاء، دوس الزرار ده وارفع الملف اللي هينزل باسم <b>data.json</b> على نفس مستودع GitHub بتاعك (بيستبدل القديم لو موجود). بعد الرفع والـ Commit، كل حد يفتح التطبيق (حتى لو نسخته مثبتة كـ APK) هيشوف التحديث الجديد.</p>
       ${hasUnpublishedChanges() ? `<div class="note" style="border-color:#a83030;background:#fbe4e4;color:#8c1c1c;margin-bottom:8px;">⚠️ عندك تعديلات لسه ما اتنشرتش. نزّل الملف وارفعه على GitHub، وبعدين دوس "تم الرفع" تحت.</div>` : ''}
@@ -1248,10 +1281,6 @@ function renderAdminSettings(body){
     const v = document.getElementById('newCatInput').value.trim();
     if(v && !state.categories.includes(v)){ state.categories.push(v); markUnpublished(); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
   };
-  document.getElementById('savePass').onclick = ()=>{
-    const v = document.getElementById('newPassInput').value.trim();
-    if(v){ state.adminPassword = v; markUnpublished(); saveState(); toast('تم تحديث كلمة المرور'); }
-  };
   document.getElementById('publishData').onclick = ()=>{
     const pub = Object.assign({}, state); delete pub.adminPassword; delete pub.orders;
     const blob = new Blob([JSON.stringify(pub,null,2)], {type:'application/json'});
@@ -1302,6 +1331,11 @@ function renderAdminSettings(body){
    ========================================================= */
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
+  try{
+    const fb = await firebaseReady;
+    const user = await fb.firstAuthState;
+    if(!user){ window.location.replace('login.html'); return; }
+  }catch(e){ return; }
   if(hasUnpublishedChanges()){
     // فيه تعديلات لسه ما اتنشرتش، منسيبش تحميل الموقع يمسحها بنسخة قديمة من الإنترنت
     toast('عندك تعديلات لسه ما اتنشرتش — انشرها الأول من الإعدادات قبل ما تعمل تعديل جديد');
@@ -1311,12 +1345,10 @@ async function loadSharedDataThenRender(){
       if(res.ok){
         const remote = await res.json();
         if(remote && remote.products){
-          const keepPass = state.adminPassword;
-          const keepOrders = state.orders || [];
+                    const keepOrders = state.orders || [];
           delete remote.adminPassword;
           delete remote.orders;
           state = Object.assign(structuredClone(DEFAULT_STATE), remote);
-          state.adminPassword = keepPass;
           state.orders = keepOrders;
           saveState();
         }

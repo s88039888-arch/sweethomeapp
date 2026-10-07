@@ -185,6 +185,7 @@
   @media (prefers-reduced-motion: reduce){
     *{transition:none !important;}
   }
+.forgot-link{display:block;width:100%;border:0;background:none;color:#8a5a20;font:inherit;font-size:13px;text-align:center;margin:-4px 0 12px;cursor:pointer;text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -245,7 +246,7 @@
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged }
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
@@ -301,6 +302,23 @@ function authMessage(code) {
     default: return 'حدث خطأ، حاول مرة أخرى';
   }
 }
+
+const forgotBtn = document.getElementById('forgot-password');
+forgotBtn?.addEventListener('click', async () => {
+  const email = document.getElementById('email').value.trim();
+  if (!email) {
+    document.getElementById('error-email').textContent = 'اكتب بريدك الإلكتروني أولاً';
+    document.getElementById('error-email').classList.add('show');
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.');
+  } catch (err) {
+    document.getElementById('error-password').textContent = authMessage(err.code);
+    document.getElementById('error-password').classList.add('show');
+  }
+});
 
 const form = document.getElementById('login-form');
 form.addEventListener('submit', async (e) => {

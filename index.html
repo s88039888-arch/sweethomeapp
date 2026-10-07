@@ -669,7 +669,6 @@ const DEFAULT_STATE = {
     {id:'p12', name:'بسكويت زبدة دنماركي', category:'كوكيز وبسكويت', price:40, oldPrice:0, desc:'بسكويت زبدة فاخر بطعم غني', emoji:'🍪', image:'', rating:4.4}
   ],
   orders:[],
-  adminPassword:'admin123',
   categoryImages:{},
   weddingBooking:{
     enabled:true,
@@ -678,6 +677,41 @@ const DEFAULT_STATE = {
     whatsapp:'01094004001'
   }
 };
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAMxZ-Jyh-Al0ZdGspGNylQhxnQDhBo-VI",
+  authDomain: "sweet-home-apk.firebaseapp.com",
+  projectId: "sweet-home-apk",
+  storageBucket: "sweet-home-apk.firebasestorage.app",
+  messagingSenderId: "184004168911",
+  appId: "1:184004168911:web:739ba9e08aa89e16b7fbba"
+};
+
+const firebaseReady = (async ()=>{
+  const [appM, authM, fsM] = await Promise.all([
+    import('https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js'),
+    import('https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js'),
+    import('https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js')
+  ]);
+  const app = appM.initializeApp(FIREBASE_CONFIG);
+  const auth = authM.getAuth(app);
+  const db = fsM.getFirestore(app);
+  const firstAuthState = new Promise(resolve => {
+    const unsub = authM.onAuthStateChanged(auth, user => { unsub(); resolve(user); });
+  });
+  return {auth, db, A:authM, F:fsM, firstAuthState};
+})();
+
+async function getAdminRole(user){
+  if(!user) return false;
+  try{
+    const fb = await firebaseReady;
+    const snap = await fb.F.getDoc(fb.F.doc(fb.db,'users',user.uid));
+    if(!snap.exists()) return false;
+    const d = snap.data() || {};
+    return d.role === 'admin' || d.isAdmin === true;
+  }catch(e){ return false; }
+}
 
 const CATEGORY_EMOJI = {
   'كيك':'🎂','معجنات':'🥐','حلويات شرقية':'🧡','كوكيز وبسكويت':'🍪'
@@ -1184,9 +1218,11 @@ document.getElementById('searchInput').addEventListener('input', e=>{
   renderProducts();
 });
 
-function openAdmin(){
-  adminAuthed = false;
+async function openAdmin(){
   document.getElementById('adminScreen').classList.add('show');
+  const fb = await firebaseReady;
+  const user = fb.auth.currentUser;
+  adminAuthed = !!user && await getAdminRole(user);
   renderAdmin();
 }
 document.getElementById('adminCloseBtn').onclick = ()=>{
@@ -1226,14 +1262,35 @@ function renderAdmin(){
       <div class="login-box">
         <img src="${state.settings.logo||'logo.png'}">
         <h3>دخول لوحة الإدارة</h3>
-        <div class="field"><input type="password" id="adminPass" placeholder="كلمة المرور"></div>
+        <div class="field"><label>البريد الإلكتروني</label><input type="email" id="adminEmail" autocomplete="username" placeholder="name@example.com"></div>
+        <div class="field"><label>كلمة المرور</label><input type="password" id="adminPass" autocomplete="current-password" placeholder="كلمة المرور"></div>
         <button class="primary-btn" id="adminLoginBtn">دخول</button>
-        <p style="font-size:11px;color:#8a7057;margin-top:14px;">كلمة المرور الافتراضية: admin123 — غيّرها فوراً من تبويب الإعدادات بعد الدخول.</p>
+        <p id="adminLoginError" style="font-size:12px;color:#a83030;margin-top:12px;display:none;"></p>
       </div>`;
-    document.getElementById('adminLoginBtn').onclick = ()=>{
-      const val = document.getElementById('adminPass').value;
-      if(val === state.adminPassword){ adminAuthed = true; adminTab='products'; renderAdmin(); }
-      else toast('كلمة المرور غير صحيحة');
+    document.getElementById('adminLoginBtn').onclick = async ()=>{
+      const email = document.getElementById('adminEmail').value.trim();
+      const pass = document.getElementById('adminPass').value;
+      const err = document.getElementById('adminLoginError');
+      const btn = document.getElementById('adminLoginBtn');
+      err.style.display='none';
+      if(!email || !pass){ err.textContent='اكتب البريد الإلكتروني وكلمة المرور'; err.style.display='block'; return; }
+      btn.disabled=true; btn.textContent='جارٍ التحقق...';
+      try{
+        const fb = await firebaseReady;
+        const cred = await fb.A.signInWithEmailAndPassword(fb.auth,email,pass);
+        const allowed = await getAdminRole(cred.user);
+        if(!allowed){
+          await fb.A.signOut(fb.auth);
+          throw new Error('not-admin');
+        }
+        adminAuthed = true;
+        adminTab='products';
+        renderAdmin();
+      }catch(e){
+        err.textContent = e.message==='not-admin' ? 'هذا الحساب ليس لديه صلاحية مدير.' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+        err.style.display='block';
+        btn.disabled=false; btn.textContent='دخول';
+      }
     };
     return;
   }
@@ -1520,11 +1577,6 @@ function renderAdminSettings(body){
       </div>
     </div>
     <div class="admin-card">
-      <h3>كلمة مرور الإدارة</h3>
-      <div class="field"><label>كلمة مرور جديدة</label><input type="password" id="newPassInput" placeholder="اتركه فارغاً لعدم التغيير"></div>
-      <button class="primary-btn" id="savePass">تحديث كلمة المرور</button>
-    </div>
-    <div class="admin-card">
       <h3>🚀 نشر التحديثات لكل العملاء</h3>
       <p style="font-size:12px;color:#7a6a5c;line-height:1.8;">أي تعديل بتعمله هنا (منتجات، أسعار، صور) بيتخزن على جهازك بس. عشان يظهر عند كل العملاء، دوس الزرار ده وارفع الملف اللي هينزل باسم <b>data.json</b> على نفس مستودع GitHub بتاعك (بيستبدل القديم لو موجود). بعد الرفع والـ Commit، كل حد يفتح التطبيق (حتى لو نسخته مثبتة كـ APK) هيشوف التحديث الجديد.</p>
       <button class="primary-btn" id="publishData">تحميل ملف التحديث (data.json) 🚀</button>
@@ -1604,10 +1656,6 @@ function renderAdminSettings(body){
     const v = document.getElementById('newCatInput').value.trim();
     if(v && !state.categories.includes(v)){ state.categories.push(v); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
   };
-  document.getElementById('savePass').onclick = ()=>{
-    const v = document.getElementById('newPassInput').value.trim();
-    if(v){ state.adminPassword = v; saveState(); toast('تم تحديث كلمة المرور'); }
-  };
   document.getElementById('publishData').onclick = ()=>{
     const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
     const a = document.createElement('a');
@@ -1630,6 +1678,7 @@ function renderAdminSettings(body){
     reader.onload = ()=>{
       try{
         const parsed = JSON.parse(reader.result);
+        delete parsed.adminPassword;
         state = Object.assign(structuredClone(DEFAULT_STATE), parsed);
         saveState(); applyTheme(); renderCats(); renderProducts(); renderAdmin();
         toast('تم استيراد البيانات بنجاح');
@@ -1716,10 +1765,22 @@ function renderAdminSettings(body){
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
   try{
+    const fb = await firebaseReady;
+    const user = await fb.firstAuthState;
+    if(!user){
+      window.location.replace('login.html');
+      return;
+    }
+  }catch(e){
+    document.body.innerHTML = '<div style="padding:30px;text-align:center;font-family:Cairo,sans-serif;">تعذر الاتصال بخدمة تسجيل الدخول. تأكد من الإنترنت ثم حاول مرة أخرى.</div>';
+    return;
+  }
+  try{
     const res = await fetch('data.json', {cache:'no-store'});
     if(res.ok){
       const remote = await res.json();
       if(remote && remote.products){
+        delete remote.adminPassword;
         state = Object.assign(structuredClone(DEFAULT_STATE), remote);
         saveState();
       }
