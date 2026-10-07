@@ -515,10 +515,33 @@ document.getElementById('sortSelect').addEventListener('change', e=>{
   renderProducts();
 });
 
-function openAdmin(){
+async function openAdmin(){
   adminAuthed = false;
   document.getElementById('adminScreen').classList.add('show');
-  renderAdmin();
+  const content = document.getElementById('adminContent');
+  content.innerHTML = '<div class="login-box"><h3>جارٍ التحقق من صلاحية المدير...</h3></div>';
+  try{
+    const fb = await fbReady;
+    const user = fb.auth.currentUser;
+    if(!user){
+      content.innerHTML = '<div class="login-box"><h3>يجب تسجيل الدخول أولاً</h3><p>سجّل الدخول بالبريد الإلكتروني وكلمة المرور ثم افتح لوحة الإدارة.</p><button class="primary-btn" id="goLoginBtn">تسجيل الدخول</button></div>';
+      document.getElementById('goLoginBtn').onclick = ()=>{ location.href = 'login.html'; };
+      return;
+    }
+    const snap = await fb.F.getDoc(fb.F.doc(fb.db,'users',user.uid));
+    const role = snap.exists() ? String((snap.data()||{}).role||'').trim().toLowerCase() : '';
+    if(role !== 'admin'){
+      content.innerHTML = '<div class="login-box"><img src="'+(state.settings.logo||'logo.png')+'"><h3>ليس لديك صلاحية مدير</h3><p>تم تسجيل الدخول بنجاح، لكن هذا الحساب ليس مديراً.</p><button class="secondary-btn" id="adminBackBtn">إغلاق</button></div>';
+      document.getElementById('adminBackBtn').onclick = ()=>document.getElementById('adminScreen').classList.remove('show');
+      return;
+    }
+    adminAuthed = true;
+    adminTab = 'products';
+    renderAdmin();
+  }catch(e){
+    content.innerHTML = '<div class="login-box"><h3>تعذر التحقق من صلاحية المدير</h3><p>تحقق من اتصال الإنترنت وقواعد Firestore ثم حاول مرة أخرى.</p><button class="secondary-btn" id="adminRetryBtn">إعادة المحاولة</button></div>';
+    document.getElementById('adminRetryBtn').onclick = openAdmin;
+  }
 }
 document.getElementById('adminCloseBtn').onclick = ()=>{
   document.getElementById('adminScreen').classList.remove('show');
@@ -573,24 +596,6 @@ const fbReady = (async ()=>{
   });
   return { auth: authM.getAuth(app), db: fsM.getFirestore(app), A: authM, F: fsM };
 })();
-
-const firebaseReady = fbReady.then(async fb => {
-  const firstAuthState = new Promise(resolve => {
-    const unsub = fb.A.onAuthStateChanged(fb.auth, user => { unsub(); resolve(user); });
-  });
-  return Object.assign(fb, { firstAuthState });
-});
-
-async function getAdminRole(user){
-  if(!user) return false;
-  try{
-    const fb = await firebaseReady;
-    const snap = await fb.F.getDoc(fb.F.doc(fb.db,'users',user.uid));
-    if(!snap.exists()) return false;
-    const d = snap.data() || {};
-    return d.role === 'admin' || d.isAdmin === true;
-  }catch(e){ return false; }
-}
 
 function authMsg(code){
   switch(code){
@@ -891,44 +896,7 @@ function renderBookingSheet(){
 
 function renderAdmin(){
   const content = document.getElementById('adminContent');
-  if(!adminAuthed){
-    content.innerHTML = `
-      <div class="login-box">
-        <img src="${state.settings.logo||'logo.png'}">
-        <h3>دخول لوحة الإدارة</h3>
-        <div class="field"><label>البريد الإلكتروني</label><input type="email" id="adminEmail" autocomplete="username" placeholder="name@example.com"></div>
-        <div class="field"><label>كلمة المرور</label><input type="password" id="adminPass" autocomplete="current-password" placeholder="كلمة المرور"></div>
-        <button class="primary-btn" id="adminLoginBtn">دخول</button>
-        <p id="adminLoginError" style="font-size:12px;color:#a83030;margin-top:12px;display:none;"></p>
-      </div>`;
-    document.getElementById('adminLoginBtn').onclick = async ()=>{
-      const email = document.getElementById('adminEmail').value.trim();
-      const pass = document.getElementById('adminPass').value;
-      const err = document.getElementById('adminLoginError');
-      const btn = document.getElementById('adminLoginBtn');
-      err.style.display='none';
-      if(!email || !pass){ err.textContent='اكتب البريد الإلكتروني وكلمة المرور'; err.style.display='block'; return; }
-      btn.disabled=true; btn.textContent='جارٍ التحقق...';
-      try{
-        const fb = await firebaseReady;
-        const cred = await fb.A.signInWithEmailAndPassword(fb.auth,email,pass);
-        const allowed = await getAdminRole(cred.user);
-        if(!allowed){
-          await fb.A.signOut(fb.auth);
-          throw new Error('not-admin');
-        }
-        adminAuthed = true;
-        adminTab='products';
-        renderAdmin();
-      }catch(e){
-        err.textContent = e.message==='not-admin' ? 'هذا الحساب ليس لديه صلاحية مدير.' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
-        err.style.display='block';
-        btn.disabled=false; btn.textContent='دخول';
-      }
-    };
-    return;
-  }
-
+  if(!adminAuthed) return;
   const tabs = [
     ['products','المنتجات'],['branches','الفروع'],['appearance','المظهر'],
     ['payment','الدفع'],['orders','الطلبات'],['settings','الإعدادات']
@@ -948,6 +916,7 @@ function renderAdmin(){
   if(adminTab==='settings') renderAdminSettings(body);
 }
 
+/* ---- products tab ---- */
 function renderAdminProducts(body){
   body.innerHTML = `
     <div class="admin-card">
@@ -1282,7 +1251,7 @@ function renderAdminSettings(body){
     if(v && !state.categories.includes(v)){ state.categories.push(v); markUnpublished(); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
   };
   document.getElementById('publishData').onclick = ()=>{
-    const pub = Object.assign({}, state); delete pub.adminPassword; delete pub.orders;
+    const pub = Object.assign({}, state); delete pub.orders;
     const blob = new Blob([JSON.stringify(pub,null,2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1296,7 +1265,7 @@ function renderAdminSettings(body){
     toast('تمام، هيتاكد من التحديث في المرة الجاية اللي التطبيق يفتح فيها 👍');
   };
   document.getElementById('exportData').onclick = ()=>{
-    const pub = Object.assign({}, state); delete pub.adminPassword;
+    const pub = Object.assign({}, state); 
     const blob = new Blob([JSON.stringify(pub,null,2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1331,11 +1300,6 @@ function renderAdminSettings(body){
    ========================================================= */
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
-  try{
-    const fb = await firebaseReady;
-    const user = await fb.firstAuthState;
-    if(!user){ window.location.replace('login.html'); return; }
-  }catch(e){ return; }
   if(hasUnpublishedChanges()){
     // فيه تعديلات لسه ما اتنشرتش، منسيبش تحميل الموقع يمسحها بنسخة قديمة من الإنترنت
     toast('عندك تعديلات لسه ما اتنشرتش — انشرها الأول من الإعدادات قبل ما تعمل تعديل جديد');
@@ -1345,8 +1309,7 @@ async function loadSharedDataThenRender(){
       if(res.ok){
         const remote = await res.json();
         if(remote && remote.products){
-                    const keepOrders = state.orders || [];
-          delete remote.adminPassword;
+          const keepOrders = state.orders || [];
           delete remote.orders;
           state = Object.assign(structuredClone(DEFAULT_STATE), remote);
           state.orders = keepOrders;
