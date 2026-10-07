@@ -75,6 +75,7 @@ let adminTab = 'products';
 
 /* ---------------- helpers ---------------- */
 function uid(prefix){ return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function money(n){ return Number(n).toLocaleString('ar-EG') + ' ج.م'; }
 function saveCart(){ localStorage.setItem('sweethome_cart', JSON.stringify(cart)); }
 function toast(msg){
@@ -386,8 +387,8 @@ function renderCartSheet(){
     const branchOptions = state.branches.map(b=>`<option value="${b.id}">${b.name}</option>`).join('');
     sheet.innerHTML = `
       <div class="sheet-head"><h2>بيانات الطلب</h2><button class="close-x" id="closeCartX">✕</button></div>
-      <div class="field"><label>الاسم</label><input type="text" id="custName" placeholder="اكتب اسمك" value="${getProfile()?getProfile().name:''}"></div>
-      <div class="field"><label>رقم الموبايل</label><input type="tel" id="custPhone" placeholder="01xxxxxxxxx" value="${getProfile()?getProfile().phone:''}"></div>
+      <div class="field"><label>الاسم</label><input type="text" id="custName" placeholder="اكتب اسمك" value="${getProfile()?esc(getProfile().name):''}"></div>
+      <div class="field"><label>رقم الموبايل</label><input type="tel" id="custPhone" placeholder="01xxxxxxxxx" value="${getProfile()?esc(getProfile().phone):''}"></div>
       <div class="field">
         <label>طريقة الاستلام</label>
         <div class="radio-group">
@@ -617,8 +618,8 @@ function openAccount(){
     sheet.innerHTML = `
       <div class="sheet-head"><h2>حسابي</h2><button class="close-x" id="closeMenuX">✕</button></div>
       <div class="admin-card">
-        <h3>👋 أهلاً بيك يا ${profile.name}</h3>
-        <p style="font-size:12.5px;color:#6a5a4c;line-height:1.8;">📧 ${profile.email||'—'}<br>📱 ${profile.phone||'—'}</p>
+        <h3>👋 أهلاً بيك يا ${esc(profile.name)}</h3>
+        <p style="font-size:12.5px;color:#6a5a4c;line-height:1.8;">📧 ${esc(profile.email)||'—'}<br>📱 ${esc(profile.phone)||'—'}</p>
         <p class="note" style="margin-top:8px;">بياناتك محفوظة في حسابك، وهتتعبى تلقائياً في أي طلب جديد.</p>
       </div>
       <div class="admin-card" style="text-align:center;">
@@ -630,9 +631,11 @@ function openAccount(){
       ${myOrders.length>0 ? `<button class="secondary-btn" id="reorderBtn">🔁 أعد آخر طلب</button>` : ''}
       <button class="secondary-btn" id="editProfileBtn">تعديل البيانات</button>
       <button class="secondary-btn" id="logoutProfileBtn" style="color:#a83030;">تسجيل الخروج</button>
+      <button class="secondary-btn" id="deleteAccountBtn" style="color:#a83030;">🗑️ حذف حسابي نهائياً</button>
     `;
     document.getElementById('editProfileBtn').onclick = ()=>renderProfileForm(profile);
     document.getElementById('logoutProfileBtn').onclick = async ()=>{ try{ const fb = await fbReady; await fb.A.signOut(fb.auth); }catch(e){} clearProfile(); toast('تم تسجيل الخروج'); openAccount(); };
+    document.getElementById('deleteAccountBtn').onclick = deleteMyAccount;
     document.getElementById('viewWishlistBtn').onclick = renderWishlistSheet;
     document.getElementById('viewMyOrdersBtn').onclick = renderMyOrdersSheet;
     if(myOrders.length>0){
@@ -652,6 +655,26 @@ function openAccount(){
   }
   document.getElementById('closeMenuX') && (document.getElementById('closeMenuX').onclick = closeMenu);
   document.getElementById('menuOverlay').classList.add('show');
+}
+
+async function deleteMyAccount(){
+  const pass = prompt('لحذف حسابك نهائياً، اكتب كلمة المرور للتأكيد:');
+  if(!pass) return;
+  if(!confirm('سيتم حذف حسابك وبياناتك نهائياً ولا يمكن التراجع. متابعة؟')) return;
+  try{
+    const fb = await fbReady;
+    const u = fb.auth.currentUser;
+    if(!u){ toast('سجّل الدخول أولاً'); return; }
+    const cred = fb.A.EmailAuthProvider.credential(u.email, pass);
+    await fb.A.reauthenticateWithCredential(u, cred);
+    await fb.F.deleteDoc(fb.F.doc(fb.db,'users',u.uid));
+    await fb.A.deleteUser(u);
+    clearProfile();
+    ['sweethome_wishlist','sweethome_myorders','sweethome_points'].forEach(k=>localStorage.removeItem(k));
+    state.orders = []; saveState();
+    toast('تم حذف حسابك وبياناتك نهائياً');
+    closeMenu();
+  }catch(e){ toast(authMsg(e.code)); }
 }
 
 function renderWishlistSheet(){
@@ -702,9 +725,9 @@ function renderProfileForm(existing){
   const sheet = document.getElementById('menuSheet');
   sheet.innerHTML = `
     <div class="sheet-head"><h2>تعديل بياناتي</h2><button class="close-x" id="closeMenuX">✕</button></div>
-    <div class="field"><label>الاسم</label><input type="text" id="prof_name" value="${existing.name||''}"></div>
-    <div class="field"><label>البريد الإلكتروني</label><input type="email" id="prof_email" value="${existing.email||''}" disabled></div>
-    <div class="field"><label>رقم الموبايل</label><input type="tel" id="prof_phone" value="${existing.phone||''}"></div>
+    <div class="field"><label>الاسم</label><input type="text" id="prof_name" value="${esc(existing.name)}"></div>
+    <div class="field"><label>البريد الإلكتروني</label><input type="email" id="prof_email" value="${esc(existing.email)}" disabled></div>
+    <div class="field"><label>رقم الموبايل</label><input type="tel" id="prof_phone" value="${esc(existing.phone)}"></div>
     <button class="primary-btn" id="saveProfileBtn">حفظ التعديلات</button>
   `;
   document.getElementById('closeMenuX').onclick = closeMenu;
@@ -735,12 +758,24 @@ function renderAuthForm(mode){
     <div class="field"><label>كلمة المرور</label><input type="password" id="auth_pass" autocomplete="${isSignup?'new-password':'current-password'}"></div>
     <p id="auth_err" style="color:#a83030;font-size:12.5px;min-height:18px;"></p>
     <button class="primary-btn" id="authSubmitBtn">${isSignup?'إنشاء الحساب':'تسجيل الدخول'}</button>
+    ${isSignup?'':'<button class="ghost-btn" id="forgotBtn" style="display:block;margin:10px auto 0;">نسيت كلمة المرور؟</button>'}
     <button class="secondary-btn" id="authSwitchBtn">${isSignup?'عندي حساب بالفعل':'ماعنديش حساب، إنشاء حساب جديد'}</button>
   `;
   document.getElementById('closeMenuX').onclick = closeMenu;
   document.getElementById('authSwitchBtn').onclick = ()=>renderAuthForm(isSignup?'login':'signup');
   const btn = document.getElementById('authSubmitBtn');
   const err = document.getElementById('auth_err');
+  const forgot = document.getElementById('forgotBtn');
+  if(forgot) forgot.onclick = async ()=>{
+    err.textContent = '';
+    const email = document.getElementById('auth_email').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ err.textContent='اكتب إيميلك الأول وبعدين دوس "نسيت كلمة المرور"'; return; }
+    try{
+      const fb = await fbReady;
+      await fb.A.sendPasswordResetEmail(fb.auth, email);
+      toast('لو الإيميل مسجل عندنا، هيوصلك رابط لإعادة تعيين كلمة المرور');
+    }catch(e){ err.textContent = authMsg(e.code); }
+  };
   btn.onclick = async ()=>{
     err.textContent = '';
     const email = document.getElementById('auth_email').value.trim();
@@ -1218,7 +1253,7 @@ function renderAdminSettings(body){
     if(v){ state.adminPassword = v; markUnpublished(); saveState(); toast('تم تحديث كلمة المرور'); }
   };
   document.getElementById('publishData').onclick = ()=>{
-    const pub = Object.assign({}, state); delete pub.adminPassword;
+    const pub = Object.assign({}, state); delete pub.adminPassword; delete pub.orders;
     const blob = new Blob([JSON.stringify(pub,null,2)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -1277,9 +1312,12 @@ async function loadSharedDataThenRender(){
         const remote = await res.json();
         if(remote && remote.products){
           const keepPass = state.adminPassword;
+          const keepOrders = state.orders || [];
           delete remote.adminPassword;
+          delete remote.orders;
           state = Object.assign(structuredClone(DEFAULT_STATE), remote);
           state.adminPassword = keepPass;
+          state.orders = keepOrders;
           saveState();
         }
       }

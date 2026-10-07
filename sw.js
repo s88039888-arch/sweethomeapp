@@ -1,8 +1,16 @@
-// SWEET HOME service worker v3
-// يتجاهل طلبات Firebase وGoogle ويعدّي أي طلب خارجي مباشرة
-const CACHE = 'sweet-home-v3';
+// SWEET HOME service worker v4
+// الشبكة أولاً عشان التحديثات توصل فوراً، ولو مفيش نت نرجع للنسخة المخزنة.
+// طلبات Firebase وGoogle (خارج موقعنا) بنسيبها تعدّي مباشرة.
+const CACHE = 'sweet-home-v4';
+const CORE = ['./', 'index.html', 'app.js', 'manifest.json', 'data.json', 'logo.png', 'icon-192.png'];
 
-self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((c) => Promise.allSettled(CORE.map((u) => c.add(u))))
+      .then(() => self.skipWaiting())
+  );
+});
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
@@ -15,18 +23,21 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
-
-  // لا نتدخل في أي طلب غير GET أو خارج موقعنا (Firebase, Google, ...)
   if (req.method !== 'GET' || url.origin !== location.origin) return;
 
-  // الشبكة أولاً (بدون كاش المتصفح) عشان التحديثات توصل فوراً، ولو مفيش نت نرجع للنسخة المخزنة
   event.respondWith(
     fetch(req, { cache: 'no-store' })
       .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy));
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(req, copy));
+        }
         return res;
       })
-      .catch(() => caches.match(req))
+      .catch(() =>
+        caches.match(req).then((hit) =>
+          hit || (req.mode === 'navigate' ? caches.match('index.html') : undefined)
+        )
+      )
   );
 });
