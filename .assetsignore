@@ -1,1 +1,6 @@
-
+Sweet Home.aab
+Readme.html
+.gitignore
+*.keystore
+*.jks
+signing-key-info.txt
