@@ -760,6 +760,7 @@ function renderAuthForm(mode){
     <div class="field"><label>البريد الإلكتروني</label><input type="email" id="auth_email" autocomplete="email"></div>
     <div class="field"><label>كلمة المرور</label><input type="password" id="auth_pass" autocomplete="${isSignup?'new-password':'current-password'}"></div>
     <p id="auth_err" style="color:#a83030;font-size:12.5px;min-height:18px;"></p>
+    <p style="font-size:11.5px;color:#8A6E55;text-align:center;margin:4px 0 8px;">بالمتابعة أنت توافق على <a href="privacy.html" style="color:#B3122E;font-weight:700;">سياسة الخصوصية</a></p>
     <button class="primary-btn" id="authSubmitBtn">${isSignup?'إنشاء الحساب':'تسجيل الدخول'}</button>
     ${isSignup?'':'<button class="ghost-btn" id="forgotBtn" style="display:block;margin:10px auto 0;">نسيت كلمة المرور؟</button>'}
     <button class="secondary-btn" id="authSwitchBtn">${isSignup?'عندي حساب بالفعل':'ماعنديش حساب، إنشاء حساب جديد'}</button>
@@ -1303,6 +1304,19 @@ function renderAdminSettings(body){
 /* =========================================================
    INIT — تحميل بيانات مشتركة (data.json) لو موجودة على الموقع
    ========================================================= */
+const APP_VERSION = '1.1';
+function injectLegalLinks(){
+  if(document.getElementById('legalLinks')) return;
+  const html = '<div id="legalLinks" style="text-align:center;font-size:12px;padding:8px 16px 20px;line-height:2;">'
+    + '<a href="privacy.html" style="color:#764B29;font-weight:700;margin:0 8px;">سياسة الخصوصية</a>'
+    + '<span style="color:#8A6E55;">•</span>'
+    + '<a href="delete-account.html" style="color:#764B29;font-weight:700;margin:0 8px;">حذف الحساب</a>'
+    + '<div style="color:#8A6E55;font-size:10.5px;">الإصدار ' + APP_VERSION + '</div></div>';
+  const f = document.querySelector('.footer');
+  if(f) f.insertAdjacentHTML('beforeend', html);
+  else { const g = document.getElementById('productsGrid'); if(g) g.insertAdjacentHTML('afterend', html); }
+}
+
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
   if(hasUnpublishedChanges()){
@@ -1330,6 +1344,7 @@ async function loadSharedDataThenRender(){
   renderCats();
   renderProducts();
   renderCartBadge();
+  injectLegalLinks();
   const elapsed = Date.now() - startTime;
   const minSplashTime = 750; // أقل مدة لعرض شاشة الافتتاح عشان متلحظش
   setTimeout(()=>{
