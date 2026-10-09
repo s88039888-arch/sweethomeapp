@@ -1304,7 +1304,7 @@ function renderAdminSettings(body){
 /* =========================================================
    INIT — تحميل بيانات مشتركة (data.json) لو موجودة على الموقع
    ========================================================= */
-const APP_VERSION = '1.1';
+const APP_VERSION = '1.2';
 function injectLegalLinks(){
   if(document.getElementById('legalLinks')) return;
   const html = '<div id="legalLinks" style="text-align:center;font-size:12px;padding:8px 16px 20px;line-height:2;">'
@@ -1319,10 +1319,10 @@ function injectLegalLinks(){
 
 async function loadSharedDataThenRender(){
   const startTime = Date.now();
-  if(hasUnpublishedChanges()){
-    // فيه تعديلات لسه ما اتنشرتش، منسيبش تحميل الموقع يمسحها بنسخة قديمة من الإنترنت
-    toast('عندك تعديلات لسه ما اتنشرتش — انشرها الأول من الإعدادات قبل ما تعمل تعديل جديد');
-  } else {
+  // دايماً نحمّل المنتجات والأسعار والصور من data.json (المصدر الرسمي)،
+  // ونشيل علامة "تعديلات غير منشورة" القديمة اللي كانت بتخفي المنتجات.
+  clearUnpublished();
+  {
     try{
       const res = await fetch('data.json', {cache:'no-store'});
       if(res.ok){
