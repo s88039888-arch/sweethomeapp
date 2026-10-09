@@ -1,6 +1,10 @@
+.git
+.gitignore
+.assetsignore
 Sweet Home.aab
 Readme.html
-.gitignore
+README-*
 *.keystore
 *.jks
 signing-key-info.txt
+firestore.rules
