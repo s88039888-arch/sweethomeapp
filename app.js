@@ -1304,7 +1304,7 @@ function renderAdminSettings(body){
 /* =========================================================
    INIT — تحميل بيانات مشتركة (data.json) لو موجودة على الموقع
    ========================================================= */
-const APP_VERSION = '1.1';
+const APP_VERSION = '1.2';
 function injectLegalLinks(){
   if(document.getElementById('legalLinks')) return;
   const html = '<div id="legalLinks" style="text-align:center;font-size:12px;padding:8px 16px 20px;line-height:2;">'
