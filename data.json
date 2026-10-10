@@ -1,0 +1,192 @@
+{
+  "settings": {
+    "storeName": "Sweet Home",
+    "tagline": "بيت الحلويات... دائماً أحلى",
+    "logo": "logo.png",
+    "primary": "#B3122E",
+    "accent": "#C89B3C",
+    "bg": "#FBEFDA",
+    "ink": "#3B2417",
+    "font": "lalezar"
+  },
+  "categories": [
+    "كيك",
+    "معجنات",
+    "حلويات شرقية",
+    "كوكيز وبسكويت"
+  ],
+  "branches": [
+    {
+      "id": 1,
+      "name": "فرع مدينة السلام",
+      "phone": "01094004001"
+    },
+    {
+      "id": 2,
+      "name": "فرع قناة السويس",
+      "phone": "01090881475"
+    },
+    {
+      "id": 3,
+      "name": "فرع الترعة",
+      "phone": "01022266663"
+    },
+    {
+      "id": 4,
+      "name": "فرع النخلة",
+      "phone": "01002999907"
+    }
+  ],
+  "payment": {
+    "vodafoneCash": "01094004001",
+    "instapay": "SweetHome@instapay",
+    "codEnabled": true
+  },
+  "products": [
+    {
+      "id": "p1",
+      "name": "كيك شوكولاتة بالفراولة",
+      "category": "كيك",
+      "price": 150,
+      "oldPrice": 0,
+      "desc": "كيك طبقات شوكولاتة بالفراولة الطازجة وصوص شوكولاتة سائل",
+      "emoji": "🍰",
+      "image": "",
+      "featured": true,
+      "rating": 4.8
+    },
+    {
+      "id": "p2",
+      "name": "ريد فيلفيت",
+      "category": "كيك",
+      "price": 120,
+      "oldPrice": 0,
+      "desc": "كيك ريد فيلفيت بكريمة الجبن الطرية",
+      "emoji": "❤️",
+      "image": "",
+      "featured": false,
+      "rating": 4.5
+    },
+    {
+      "id": "p3",
+      "name": "تشيز كيك فراولة",
+      "category": "كيك",
+      "price": 110,
+      "oldPrice": 130,
+      "desc": "تشيز كيك كريمي بصوص الفراولة الطبيعي",
+      "emoji": "🍓",
+      "image": "",
+      "featured": true,
+      "rating": 4.9
+    },
+    {
+      "id": "p4",
+      "name": "كب كيك مشكل (4 قطع)",
+      "category": "كيك",
+      "price": 60,
+      "oldPrice": 0,
+      "desc": "تشكيلة كب كيك بالكريمة الملونة",
+      "emoji": "🧁",
+      "image": "",
+      "featured": false,
+      "rating": 0
+    },
+    {
+      "id": "p5",
+      "name": "كرواسون بالشوكولاتة",
+      "category": "معجنات",
+      "price": 35,
+      "oldPrice": 0,
+      "desc": "كرواسون فرنساوي هش محشو شوكولاتة",
+      "emoji": "🥐",
+      "image": "",
+      "featured": false,
+      "rating": 4.3
+    },
+    {
+      "id": "p6",
+      "name": "دانيش بالجبنة",
+      "category": "معجنات",
+      "price": 30,
+      "oldPrice": 0,
+      "desc": "معجنات طازجة محشوة جبنة كريمي",
+      "emoji": "🥮",
+      "image": "",
+      "featured": false,
+      "rating": 0
+    },
+    {
+      "id": "p7",
+      "name": "فطيرة السبانخ",
+      "category": "معجنات",
+      "price": 25,
+      "oldPrice": 0,
+      "desc": "فطيرة بيتي بالسبانخ الطازجة",
+      "emoji": "🥟",
+      "image": "",
+      "featured": false,
+      "rating": 0
+    },
+    {
+      "id": "p8",
+      "name": "كنافة بالجبنة",
+      "category": "حلويات شرقية",
+      "price": 75,
+      "oldPrice": 0,
+      "desc": "كنافة طازجة محشوة جبنة مع قطر بلدي",
+      "emoji": "🧡",
+      "image": "",
+      "featured": true,
+      "rating": 4.7
+    },
+    {
+      "id": "p9",
+      "name": "بقلاوة مشكل",
+      "category": "حلويات شرقية",
+      "price": 90,
+      "oldPrice": 0,
+      "desc": "تشكيلة بقلاوة بالفستق واللوز",
+      "emoji": "🥮",
+      "image": "",
+      "featured": false,
+      "rating": 4.4
+    },
+    {
+      "id": "p10",
+      "name": "بسبوسة بالقشطة",
+      "category": "حلويات شرقية",
+      "price": 50,
+      "oldPrice": 0,
+      "desc": "بسبوسة طرية بالقشطة الطازجة",
+      "emoji": "🍯",
+      "image": "",
+      "featured": false,
+      "rating": 0
+    },
+    {
+      "id": "p11",
+      "name": "كوكيز شوكولاتة تشيب",
+      "category": "كوكيز وبسكويت",
+      "price": 45,
+      "oldPrice": 0,
+      "desc": "كوكيز مقرمش من الخارج طري من الداخل بقطع شوكولاتة",
+      "emoji": "🍪",
+      "image": "",
+      "featured": false,
+      "rating": 4.2
+    },
+    {
+      "id": "p12",
+      "name": "بسكويت زبدة دنماركي",
+      "category": "كوكيز وبسكويت",
+      "price": 40,
+      "oldPrice": 0,
+      "desc": "بسكويت زبدة فاخر بطعم غني",
+      "emoji": "🍪",
+      "image": "",
+      "featured": false,
+      "rating": 0
+    }
+  ],
+  "categoryImages": {}
+}
