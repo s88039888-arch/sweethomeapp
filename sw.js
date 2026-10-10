@@ -1,8 +1,8 @@
 // SWEET HOME service worker v4
 // الشبكة أولاً عشان التحديثات توصل فوراً، ولو مفيش نت نرجع للنسخة المخزنة.
 // طلبات Firebase وGoogle (خارج موقعنا) بنسيبها تعدّي مباشرة.
-const CACHE = 'sweet-home-v4';
-const CORE = ['./', 'index.html', 'app.js', 'manifest.json', 'data.json', 'logo.png', 'icon-192.png'];
+const CACHE = 'sweet-home-v5';
+const CORE = ['./', 'index.html', 'auth.js', 'privacy.html', 'manifest.json', 'data.json', 'logo.png', 'icon-192.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
