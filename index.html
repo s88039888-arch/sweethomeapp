@@ -687,7 +687,11 @@ function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     const base = structuredClone(DEFAULT_STATE);
-    const st = raw ? Object.assign(base, JSON.parse(raw)) : base;
+    // Drop legacy caches containing embedded base64 images; they slow startup and can exceed storage limits.
+    if(raw && raw.length > 900000){ localStorage.removeItem(STORAGE_KEY); }
+    const usableRaw = raw && raw.length <= 900000 ? raw : null;
+    const st = usableRaw ? Object.assign(base, JSON.parse(usableRaw)) : base;
+    delete st.adminPassword;
     st.orders = loadOrders();
     return st;
   }catch(e){ return structuredClone(DEFAULT_STATE); }
@@ -695,7 +699,7 @@ function loadState(){
 const ORDERS_KEY = 'sweethome_orders_v1';
 function saveState(){
   try{ localStorage.setItem(ORDERS_KEY, JSON.stringify(state.orders||[])); }catch(e){}
-  try{ const copy = Object.assign({}, state, {orders:[]}); localStorage.setItem(STORAGE_KEY, JSON.stringify(copy)); }
+  try{ const copy = Object.assign({}, state, {orders:[]}); delete copy.adminPassword; localStorage.setItem(STORAGE_KEY, JSON.stringify(copy)); }
   catch(e){ console.warn('localStorage full, skipping state cache'); }
 }
 function loadOrders(){ try{ return JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]'); }catch(e){ return []; } }
@@ -854,7 +858,7 @@ function starsHtml(r){
 function cardHtml(p, opts){
   opts = opts || {};
   const qty = getCartQty(p.id);
-  const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy">` : p.emoji;
+  const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">` : p.emoji;
   let tag = '';
   if(opts.best) tag = `<span class="tag best">الأكثر طلباً</span>`;
   else if((p.rating||0)>=4.8) tag = `<span class="tag best">⭐ مميز</span>`;
@@ -906,7 +910,7 @@ function applyHeroPhotos(){
     const box = sl.querySelector('.hero-emoji');
     if(box){
       box.classList.add('has-photo');
-      box.innerHTML = `<img src="${p.image}" alt="${p.name}" decoding="async">`;
+      box.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">`;
       box.onclick = ()=>openProduct(p.id);
     }
     // text follows the product shown in the photo
@@ -972,7 +976,7 @@ function renderProducts(){
 function openProduct(id){
   const p = state.products.find(p=>p.id===id);
   if(!p) return;
-  const imgHtml = p.image ? `<img src="${p.image}" style="width:100%;height:180px;object-fit:cover;border-radius:14px;">` : `<div style="font-size:70px;text-align:center;padding:20px 0;">${p.emoji}</div>`;
+  const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" style="width:100%;height:180px;object-fit:cover;border-radius:14px;">` : `<div style="font-size:70px;text-align:center;padding:20px 0;">${p.emoji}</div>`;
   document.getElementById('productSheet').innerHTML = `
     <div class="sheet-head"><h2>${p.name}</h2><button class="close-x" id="closeProduct">✕</button></div>
     ${imgHtml}
@@ -1041,7 +1045,7 @@ function renderCartSheet(){
     const itemsHtml = cart.map(c=>{
       const p = state.products.find(p=>p.id===c.id);
       if(!p) return '';
-      const imgHtml = p.image ? `<img src="${p.image}">` : p.emoji;
+      const imgHtml = p.image ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">` : p.emoji;
       return `
       <div class="cart-item">
         <div class="cart-item-img">${imgHtml}</div>
@@ -1280,7 +1284,7 @@ function renderAdminProducts(body){
   const list = document.getElementById('prodList');
   list.innerHTML = state.products.map(p=>`
     <div class="admin-list-item">
-      ${p.image?`<img src="${p.image}">`:`<div class="ph">${p.emoji}</div>`}
+      ${p.image?`<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async">`:`<div class="ph">${p.emoji}</div>`}
       <div class="meta"><b>${p.name}</b>${p.category} — ${money(p.price)}</div>
       <button class="small-btn edit" data-edit="${p.id}">تعديل</button>
       <button class="small-btn del" data-del="${p.id}">حذف</button>
@@ -1612,7 +1616,10 @@ function renderAdminSettings(body){
     if(v && !state.categories.includes(v)){ state.categories.push(v); saveState(); renderAdmin(); renderCats(); toast('تمت إضافة القسم'); }
   };
   document.getElementById('publishData').onclick = ()=>{
-    const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+    const publicState = JSON.parse(JSON.stringify(state));
+    delete publicState.adminPassword;
+    publicState.orders = []; // Never publish customer orders in a public static file.
+    const blob = new Blob([JSON.stringify(publicState,null,0)], {type:'application/json'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'data.json';
@@ -1716,33 +1723,34 @@ function renderAdminSettings(body){
   }, {passive:true});
 })();
 
-async function loadSharedDataThenRender(){
-  const startTime = Date.now();
-  try{
-    const res = await fetch('data.json', {cache:'no-store'});
-    if(res.ok){
-      const remote = await res.json();
-      if(remote && remote.products){
-        const keepOrders = state.orders || [];
-        state = Object.assign(structuredClone(DEFAULT_STATE), remote);
-        state.orders = keepOrders;
-        delete state.adminPassword;
-        saveState();
-      }
-    }
-  }catch(e){ }
+function renderStorefront(){
   applyTheme();
   renderCats();
   renderSortRow();
   renderWeddingBanner();
   renderProducts();
   renderCartBadge();
-  const elapsed = Date.now() - startTime;
-  const minSplashTime = 750;
-  setTimeout(()=>{
-    const splash = document.getElementById('splashScreen');
-    if(splash) splash.classList.add('hide');
-  }, Math.max(0, minSplashTime - elapsed));
+}
+async function loadSharedDataThenRender(){
+  // Show cached/default content immediately instead of waiting for the network.
+  renderStorefront();
+  const splash = document.getElementById('splashScreen');
+  // Never keep the splash screen waiting for a slow network response.
+  setTimeout(()=>{ if(splash) splash.classList.add('hide'); }, 350);
+  try{
+    const res = await fetch('data.json', {cache:'default'});
+    if(res.ok){
+      const remote = await res.json();
+      if(remote && Array.isArray(remote.products)){
+        const keepOrders = state.orders || [];
+        state = Object.assign(structuredClone(DEFAULT_STATE), remote);
+        delete state.adminPassword;
+        state.orders = keepOrders;
+        saveState();
+        renderStorefront();
+      }
+    }
+  }catch(e){ /* Keep cached/default storefront visible when offline. */ }
 }
 loadSharedDataThenRender();
 
