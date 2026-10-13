@@ -58,7 +58,7 @@
       "category": "بوكسات العيد",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-01.jpg"
+      "image": "product-01.jpg"
     },
     {
       "id": "p_002",
@@ -68,7 +68,7 @@
       "category": "حلويات شرقية",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-02.jpg"
+      "image": "product-02.jpg"
     },
     {
       "id": "p_003",
@@ -78,7 +78,7 @@
       "category": "حلويات شرقية",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-03.jpg"
+      "image": "product-03.jpg"
     },
     {
       "id": "p_004",
@@ -88,7 +88,7 @@
       "category": "قسم الغربي (جاتوهات وتورت)",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-04.jpg"
+      "image": "product-04.jpg"
     },
     {
       "id": "p_005",
@@ -98,7 +98,7 @@
       "category": "حلويات شرقية",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-05.jpg"
+      "image": "product-05.jpg"
     },
     {
       "id": "p_006",
@@ -108,7 +108,7 @@
       "category": "حلويات شرقية",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-06.jpg"
+      "image": "product-06.jpg"
     },
     {
       "id": "p_007",
@@ -118,7 +118,7 @@
       "category": "قسم النواعم",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-07.jpg"
+      "image": "product-07.jpg"
     },
     {
       "id": "p_008",
@@ -128,7 +128,7 @@
       "category": "قسم الشيكولاته",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-08.jpg"
+      "image": "product-08.jpg"
     },
     {
       "id": "p_009",
@@ -138,7 +138,7 @@
       "category": "قسم المخبوزات والنواشف",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-09.jpg"
+      "image": "product-09.jpg"
     },
     {
       "id": "p_010",
@@ -148,7 +148,7 @@
       "category": "منتجات الحبه الكامله",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-10.jpg"
+      "image": "product-10.jpg"
     },
     {
       "id": "p_011",
@@ -158,7 +158,7 @@
       "category": "قسم الشيكولاته",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-11.jpg"
+      "image": "product-11.jpg"
     },
     {
       "id": "p_012",
@@ -168,7 +168,7 @@
       "category": "قسم المخبوزات والنواشف",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-12.jpg"
+      "image": "product-12.jpg"
     },
     {
       "id": "p_013",
@@ -178,7 +178,7 @@
       "category": "الإضافات",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-13.jpg"
+      "image": "product-13.jpg"
     },
     {
       "id": "p_014",
@@ -188,7 +188,7 @@
       "category": "قسم المخبوزات والنواشف",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-14.jpg"
+      "image": "product-14.jpg"
     },
     {
       "id": "p_015",
@@ -198,7 +198,7 @@
       "category": "قسم الغربي (جاتوهات وتورت)",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-15.jpg"
+      "image": "product-15.jpg"
     },
     {
       "id": "p_016",
@@ -208,7 +208,7 @@
       "category": "قسم الشيكولاته",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-16.jpg"
+      "image": "product-16.jpg"
     },
     {
       "id": "p_017",
@@ -218,7 +218,7 @@
       "category": "قسم النواعم",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-17.jpg"
+      "image": "product-17.jpg"
     },
     {
       "id": "p_018",
@@ -228,7 +228,7 @@
       "category": "قسم الغربي (جاتوهات وتورت)",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-18.jpg"
+      "image": "product-18.jpg"
     },
     {
       "id": "p_019",
@@ -238,7 +238,7 @@
       "category": "قسم الشيكولاته",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-19.jpg"
+      "image": "product-19.jpg"
     },
     {
       "id": "p_020",
@@ -248,7 +248,7 @@
       "category": "قسم الغربي (جاتوهات وتورت)",
       "desc": "",
       "emoji": "🍰",
-      "image": "products/product-20.jpg"
+      "image": "product-20.jpg"
     }
   ]
 }
